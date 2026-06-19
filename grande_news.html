@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>クラブニュース│八ヶ岳グランデフットボールクラブ</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,800;0,900;1,900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --blue:#1A6B3C; --blue-dark:#0F4526; --blue-deep:#071A0F; --accent:#D4A820; --white:#FFFFFF; --off-white:#F4F7FB; --gray:#8A9BB0; --text:#0D1B2A; --border:#DDE4EF; }
+  body { font-family:'Noto Sans JP',sans-serif; background:var(--off-white); color:var(--text); }
+
+  nav { background:var(--blue-deep); display:flex; align-items:center; justify-content:space-between; padding:0 2rem; height:64px; border-bottom:2px solid var(--accent); position:sticky; top:0; z-index:100; }
+  .nav-logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+    .nav-logo .emblem-img {
+    width: 48px; height: 48px;
+    object-fit: contain;
+    flex-shrink: 0;
+    border-radius: 0;
+    background: none;
+    border: none;
+  }
+  .nav-logo .name { font-family:'Barlow Condensed',sans-serif; font-size:17px; font-weight:800; color:var(--white); letter-spacing:1px; line-height:1.1; }
+  .nav-logo .name span { display:block; font-size:10px; font-weight:400; color:var(--accent); letter-spacing:1.5px; font-family:'Noto Sans JP',sans-serif; }
+  .nav-links { display:flex; gap:0; list-style:none; }
+  .nav-links a { color:rgba(255,255,255,0.75); text-decoration:none; font-size:13px; font-weight:500; padding:0 14px; height:64px; display:flex; align-items:center; border-bottom:3px solid transparent; transition:all 0.2s; }
+  .nav-links a:hover { color:var(--white); border-bottom-color:var(--accent); }
+  .nav-links a.active { color:var(--accent); border-bottom-color:var(--accent); }
+  @media(max-width:768px){ .nav-links{display:none;} nav{padding:0 1.25rem;} }
+
+  .page-header { background:var(--blue-dark); padding:52px 3rem 44px; position:relative; overflow:hidden; }
+  .page-header::after { content:'NEWS'; position:absolute; right:2rem; top:50%; transform:translateY(-50%); font-family:'Barlow Condensed',sans-serif; font-size:100px; font-weight:900; font-style:italic; color:rgba(255,255,255,0.04); pointer-events:none; line-height:1; }
+  .eyebrow { font-family:'Barlow Condensed',sans-serif; font-size:12px; font-weight:700; letter-spacing:4px; color:var(--accent); margin-bottom:8px; }
+  .page-header h1 { font-family:'Barlow Condensed',sans-serif; font-size:48px; font-weight:900; color:var(--white); line-height:1; }
+  .page-header h1 em { color:var(--accent); font-style:normal; }
+  .header-line { width:40px; height:3px; background:var(--accent); margin-top:12px; }
+
+  .wrap { max-width:1000px; margin:0 auto; padding:48px 3rem; }
+  @media(max-width:768px){ .wrap{padding:32px 1.25rem;} }
+
+  .filter-bar { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:32px; }
+  .filter-btn { padding:8px 18px; border:1px solid var(--border); background:var(--white); font-size:12px; font-weight:700; letter-spacing:1px; color:var(--gray); font-family:'Barlow Condensed',sans-serif; cursor:pointer; transition:all 0.2s; }
+  .filter-btn:hover { border-color:var(--blue); color:var(--blue); }
+  .filter-btn.active { background:var(--blue); border-color:var(--blue); color:var(--white); }
+
+  .news-list { display:flex; flex-direction:column; gap:2px; background:var(--border); }
+  .news-item { background:var(--white); display:flex; gap:0; text-decoration:none; color:inherit; transition:all 0.2s; }
+  .news-item:hover { background:#F0F7F3; }
+  .news-date-col { width:110px; flex-shrink:0; padding:18px 16px; border-right:1px solid var(--border); display:flex; flex-direction:column; justify-content:center; }
+  .news-date { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:700; color:var(--blue); }
+  .news-cat-badge { font-size:10px; font-weight:700; letter-spacing:1.5px; color:var(--gray); font-family:'Barlow Condensed',sans-serif; margin-top:2px; }
+  .news-body { flex:1; padding:18px 20px; display:flex; align-items:center; }
+  .news-title-text { font-size:14px; font-weight:500; line-height:1.6; color:var(--text); }
+  .news-arrow { color:var(--accent); font-size:18px; padding:0 16px; display:flex; align-items:center; font-family:'Barlow Condensed',sans-serif; opacity:0; transition:opacity 0.2s; }
+  .news-item:hover .news-arrow { opacity:1; }
+
+  @media(max-width:600px){
+    .news-date-col { width:80px; padding:14px 10px; }
+    .news-body { padding:14px; }
+  }
+
+  footer { background:var(--blue-deep); padding:24px 3rem; text-align:center; color:rgba(255,255,255,0.4); font-size:12px; margin-top:40px; }
+  footer a { color:var(--accent); text-decoration:none; }
+
+  /* SNS ICONS */
+  .sns-bar {
+    display: flex; align-items: center; gap: 4px;
+  }
+  .sns-link {
+    display: flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    border-radius: 50%;
+    transition: all 0.2s;
+  }
+  .sns-link:hover { color: var(--white); background: rgba(255,255,255,0.1); }
+  .sns-link.line:hover { color: #06C755; }
+  .sns-link.youtube:hover { color: #FF0000; }
+  .sns-link.instagram:hover { color: #E1306C; }
+
+  /* footer SNS */
+  .footer-sns {
+    display: flex; gap: 8px; margin-top: 16px;
+  }
+  .footer-sns a {
+    display: flex; align-items: center; justify-content: center;
+    width: 38px; height: 38px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    border-radius: 50%;
+    transition: all 0.2s;
+  }
+  .footer-sns a:hover { background: rgba(255,255,255,0.15); color: var(--white); }
+  .footer-sns a.line:hover { border-color: #06C755; color: #06C755; }
+  .footer-sns a.youtube:hover { border-color: #FF0000; color: #FF0000; }
+  .footer-sns a.instagram:hover { border-color: #E1306C; color: #E1306C; }
+
+
+  /* NEWS MODAL */
+  .news-modal { display:none; position:fixed; inset:0; z-index:1000; background:rgba(0,0,0,0.7); align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(4px); }
+  .news-modal.show { display:flex; animation:fadeIn 0.2s ease; }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+  .news-modal-box { background:var(--white); width:100%; max-width:640px; max-height:90vh; overflow-y:auto; position:relative; animation:slideUp 0.25s ease; }
+  @keyframes slideUp { from{transform:translateY(20px);opacity:0} to{transform:translateY(0);opacity:1} }
+  .news-modal-img { width:100%; max-height:360px; object-fit:contain; background:#071A0F; display:block; }
+  .news-modal-body { padding:24px 28px; }
+  .news-modal-cat { font-size:12px; font-weight:700; letter-spacing:2px; color:var(--green); font-family:'Barlow Condensed',sans-serif; margin-bottom:8px; }
+  .news-modal-title { font-size:20px; font-weight:700; color:var(--text); line-height:1.4; margin-bottom:8px; }
+  .news-modal-date { font-size:12px; color:var(--gray); margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid var(--border); }
+  .news-modal-text { font-size:14px; color:#4A5A6A; line-height:2.2; white-space:pre-wrap; }
+  .news-modal-close { position:absolute; top:12px; right:14px; background:rgba(0,0,0,0.5); border:none; color:var(--white); font-size:20px; width:32px; height:32px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:2; }
+
+  .nav-logo .logo-img { height: 36px; width: auto; object-fit: contain; flex-shrink: 0; display: block; mix-blend-mode: screen; }
+  @media (max-width: 480px) { .nav-logo .logo-img { height: 28px; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="grande_homepage.html">
+    <img src="emblem.png" class="emblem-img" alt="GRANDE FC エンブレム">
+    <img src="grande.png" class="logo-img" alt="GRANDE FC">
+  </a>
+  <ul class="nav-links">
+    <li><a href="grande_about.html">クラブについて</a></li>
+    <li><a href="grande_players.html">選手・スタッフ</a></li>
+    <li><a href="grande_recruit.html">選手募集</a></li>
+    <li><a href="grande_schedule.html">スケジュール</a></li>
+    <li><a href="grande_match_planner.html">試合結果</a></li>
+    <li><a href="grande_news.html" class="active">ニュース</a></li>
+    <li><a href="grande_contact.html" style="color:var(--accent);">お問い合わせ</a></li>
+  </ul>
+  <div class="sns-bar">
+    <a href="https://line.me/R/ti/p/@200sfwtn" target="_blank" class="sns-link line" title="LINE"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg></a>
+    <a href="https://m.youtube.com/@corazon-grande9642?ra=m" target="_blank" class="sns-link youtube" title="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+    <a href="https://www.instagram.com/yatsugatake.grande/" target="_blank" class="sns-link instagram" title="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a>
+  </div>
+</nav>
+
+
+<div class="page-header">
+  <div class="eyebrow">CLUB NEWS</div>
+  <h1>クラブ<em>ニュース</em></h1>
+  <div class="header-line"></div>
+</div>
+
+<div class="wrap">
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterNews('all',this)">すべて</button>
+    <button class="filter-btn" onclick="filterNews('result',this)">試合結果</button>
+    <button class="filter-btn" onclick="filterNews('jy',this)">ジュニアユース</button>
+    <button class="filter-btn" onclick="filterNews('jr',this)">ジュニア</button>
+    <button class="filter-btn" onclick="filterNews('sc',this)">スクール</button>
+    <button class="filter-btn" onclick="filterNews('ev',this)">イベント</button>
+    <button class="filter-btn" onclick="filterNews('info',this)">お知らせ</button>
+  </div>
+
+  <div class="news-list" id="newsList">
+    <a href="#" class="news-item" data-cat="info">
+      <div class="news-date-col"><div class="news-date">2026.06.01</div><div class="news-cat-badge">お知らせ</div></div>
+      <div class="news-body"><div class="news-title-text">2026年度 新入団選手募集のお知らせ — 体験練習会を随時開催中</div></div>
+      <div class="news-arrow">›</div>
+    </a>
+    <a href="#" class="news-item" data-cat="jy">
+      <div class="news-date-col"><div class="news-date">2026.05.28</div><div class="news-cat-badge">ジュニアユース</div></div>
+      <div class="news-body"><div class="news-title-text">山梨県U-15サッカーリーグ 第5節 試合結果</div></div>
+      <div class="news-arrow">›</div>
+    </a>
+    <a href="#" class="news-item" data-cat="ev">
+      <div class="news-date-col"><div class="news-date">2026.05.25</div><div class="news-cat-badge">イベント</div></div>
+      <div class="news-body"><div class="news-title-text">巡回サッカー教室 北杜市立〇〇小学校にて開催しました</div></div>
+      <div class="news-arrow">›</div>
+    </a>
+    <a href="#" class="news-item" data-cat="jr">
+      <div class="news-date-col"><div class="news-date">2026.05.20</div><div class="news-cat-badge">ジュニア</div></div>
+      <div class="news-body"><div class="news-title-text">U-12リーグ第3節 試合レポート掲載</div></div>
+      <div class="news-arrow">›</div>
+    </a>
+    <a href="#" class="news-item" data-cat="info">
+      <div class="news-date-col"><div class="news-date">2026.05.18</div><div class="news-cat-badge">お知らせ</div></div>
+      <div class="news-body"><div class="news-title-text">6月の練習スケジュール・変更のお知らせ</div></div>
+      <div class="news-arrow">›</div>
+    </a>
+    <a href="#" class="news-item" data-cat="sc">
+      <div class="news-date-col"><div class="news-date">2026.05.10</div><div class="news-cat-badge">スクール</div></div>
+      <div class="news-body"><div class="news-title-text">スクール 新規入会受付中！5月の体験会日程をお知らせします</div></div>
+      <div class="news-arrow">›</div>
+    </a>
+    <a href="#" class="news-item" data-cat="jy">
+      <div class="news-date-col"><div class="news-date">2026.05.05</div><div class="news-cat-badge">ジュニアユース</div></div>
+      <div class="news-body"><div class="news-title-text">GW練習試合 vs 甲府FC ジュニアユース 2-1 勝利！</div></div>
+      <div class="news-arrow">›</div>
+    </a>
+    <a href="#" class="news-item" data-cat="ev">
+      <div class="news-date-col"><div class="news-date">2026.04.28</div><div class="news-cat-badge">イベント</div></div>
+      <div class="news-body"><div class="news-title-text">第4回「Frontale International Cup U-11」に参加しました</div></div>
+      <div class="news-arrow">›</div>
+    </a>
+    <a href="#" class="news-item" data-cat="jr">
+      <div class="news-date-col"><div class="news-date">2026.04.20</div><div class="news-cat-badge">ジュニア</div></div>
+      <div class="news-body"><div class="news-title-text">2026年度 ジュニアチーム 新体制のお知らせ</div></div>
+      <div class="news-arrow">›</div>
+    </a>
+    <a href="#" class="news-item" data-cat="info">
+      <div class="news-date-col"><div class="news-date">2026.01.01</div><div class="news-cat-badge">お知らせ</div></div>
+      <div class="news-body"><div class="news-title-text">2026年 年頭所感 — 代表メッセージ</div></div>
+      <div class="news-arrow">›</div>
+    </a>
+  </div>
+</div>
+
+
+<!-- NEWS MODAL -->
+<div class="news-modal" id="newsModal" onclick="if(event.target===this)closeNewsModal()">
+  <div class="news-modal-box">
+    <button class="news-modal-close" onclick="closeNewsModal()">×</button>
+    <img class="news-modal-img" id="modalNewsImg" src="" alt="" style="display:none;">
+    <div class="news-modal-body">
+      <div class="news-modal-cat" id="modalNewsCat"></div>
+      <div class="news-modal-title" id="modalNewsTitle"></div>
+      <div class="news-modal-date" id="modalNewsDate"></div>
+      <div class="news-modal-text" id="modalNewsText"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Yatsugatake Grande Football Club. All Rights Reserved. ／ <a href="grande_contact.html">お問い合わせ</a></p>
+</footer>
+
+<script>
+// カテゴリキー変換（グローバルスコープ）
+function getCatKeyGlobal(cat, type) {
+  if (type === '試合結果') return 'result';
+  const map = {
+    'ジュニアユース':'jy','ジュニア':'jr','スクール':'sc',
+    'イベント':'ev','お知らせ':'info','クラブニュース':'info','試合結果':'result'
+  };
+  return map[cat] || 'info';
+}
+
+function filterNews(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.news-item').forEach(item => {
+    item.style.display = (cat === 'all' || item.dataset.cat === cat) ? '' : 'none';
+  });
+}
+</script>
+
+<script>
+
+// ===== ニュースモーダル =====
+let allPostsData = [];
+
+function openNewsModal(post) {
+  if (!post) return;
+  document.getElementById('modalNewsCat').textContent   = post.category || '';
+  document.getElementById('modalNewsTitle').textContent = post.title || '';
+  document.getElementById('modalNewsDate').textContent  = formatNewsDate(post.date);
+  // スコアをbodyの前に表示（試合結果のみ）
+  let bodyText = post.body || '（本文なし）';
+
+  // matchPlanner: 得点者を追記
+  if (post.source === 'matchPlanner' && post.score) {
+    const scorers = (post.scorers||[]).filter(s=>s.name);
+    const scorerLine = scorers.length ? '\n得点: ' + scorers.map(s=>s.minute?s.minute+"' "+s.name:s.name).join('、') : '';
+    bodyText = bodyText + scorerLine;
+  }
+
+  // manualPost: type を冒頭に表示
+  if (post.source === 'manualPost' && post.type) {
+    bodyText = '【' + post.type + '】\n' + bodyText;
+  }
+
+  document.getElementById('modalNewsText').textContent  = bodyText;
+  const img = document.getElementById('modalNewsImg');
+  if (post.image) {
+    img.src = convertNewsUrl(post.image);
+    img.style.display = 'block';
+  } else {
+    img.style.display = 'none';
+  }
+  document.getElementById('newsModal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeNewsModal() {
+  document.getElementById('newsModal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function convertNewsUrl(url) {
+  if (!url) return url;
+  const m1 = url.match(/\/file\/d\/([^\/\?]+)/);
+  if (m1) return 'https://lh3.googleusercontent.com/d/' + m1[1];
+  const m2 = url.match(/[?&]id=([^&]+)/);
+  if (m2) return 'https://lh3.googleusercontent.com/d/' + m2[1];
+  return url;
+}
+
+function formatNewsDate(str) {
+  if (!str) return '';
+  const d = new Date(str);
+  return d.getFullYear() + '.' + String(d.getMonth()+1).padStart(2,'0') + '.' + String(d.getDate()).padStart(2,'0');
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNewsModal(); });
+
+(function(){
+  const API_KEY  = '$2a$10$xopawUKPa.2MV76.BGLZtehG8EauPnBwXLLyCgXqw/H5NfvD.yuOq';
+  const NEWS_BIN = '6a26cabada38895dfe9a2ffa';
+
+  async function loadNews() {
+    try {
+      const res = await fetch(`https://api.jsonbin.io/v3/b/${NEWS_BIN}/latest`, {
+        headers: { 'X-Master-Key': API_KEY }
+      });
+      const json = await res.json();
+      // published=false の記事を除外してから日付降順ソート
+      const posts = (json.record.posts || [])
+        .filter(p => p.published !== false)
+        .sort((a,b) => new Date(b.date) - new Date(a.date));
+      allPostsData = posts;
+
+      const list = document.getElementById('newsList');
+      if (!list) return;
+
+      // postsが空の場合は静的HTMLを維持（何もしない）
+      if (!posts.length) return;
+
+      list.innerHTML = posts.map(p => {
+        const catKey = getCatKey(p.category, p.type);
+
+        // 試合結果（matchPlanner）: スコアバッジ＋勝敗カラー
+        const scoreBadge = (p.source === 'matchPlanner' && p.score)
+          ? `<span style="display:inline-block;background:#1A6B3C;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;padding:1px 8px;margin-right:8px;flex-shrink:0;">${p.score}</span>`
+          : '';
+        const resultColor = (p.source === 'matchPlanner' && p.score)
+          ? ((() => { const [a,b]=(p.score+'').split('-').map(Number); return a>b?'#1A6B3C':a<b?'#A32020':'#8A7000'; })())
+          : '';
+
+        // 投稿タイプバッジ（manualPost: お知らせ・イベント等）
+        const typeBadge = (p.source === 'manualPost' && p.type && p.type !== 'お知らせ')
+          ? `<span style="display:inline-block;background:#0F4526;color:#D4A820;font-size:11px;font-weight:700;padding:1px 7px;margin-right:8px;border-radius:3px;flex-shrink:0;">${p.type}</span>`
+          : '';
+
+        // 画像（manualPost の image フィールド対応）
+        const imgHtml = p.image
+          ? `<img src="${convertNewsUrl(p.image)}" alt="" style="width:60px;height:60px;object-fit:cover;flex-shrink:0;margin-right:12px;float:left;" onerror="this.style.display='none'">`
+          : '';
+
+        return `<div class="news-item" data-cat="${catKey}" data-id="${p.id}" style="cursor:pointer;${resultColor?'border-left:3px solid '+resultColor+';':''}" onclick="openNewsModal(allPostsData.find(x=>x.id==='${p.id}'))">
+          <div class="news-date-col">
+            <div class="news-date">${formatNewsDate(p.date)}</div>
+            <div class="news-cat-badge">${p.category || ''}</div>
+          </div>
+          <div class="news-body">
+            ${imgHtml}
+            <div class="news-title-text">${scoreBadge}${typeBadge}${p.title || ''}</div>
+          </div>
+          <div class="news-arrow">›</div>
+        </div>`;
+      }).join('');
+
+    } catch(e) {
+      console.log('ニュース読み込みスキップ:', e.message);
+    }
+  }
+
+  function getCatKey(cat, type) {
+    // typeベースで先に判定（manualPost / matchPlanner 両対応）
+    const typeMap = { '試合結果':'result', 'イベント':'ev', 'お知らせ':'info', '選手募集':'info', '活動報告':'jy', 'その他':'info' };
+    if (type && typeMap[type]) return typeMap[type];
+    // カテゴリーベース
+    const catMap = { 'ジュニアユース':'jy', 'ジュニア':'jr', 'スクール':'sc', 'イベント':'ev', 'お知らせ':'info', 'クラブニュース':'info', '試合結果':'result' };
+    return catMap[cat] || 'info';
+  }
+
+  loadNews();
+})();
+</script>
+
+</body>
+</html>

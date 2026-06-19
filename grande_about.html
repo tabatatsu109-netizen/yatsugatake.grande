@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>クラブについて│八ヶ岳グランデフットボールクラブ</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,800;0,900;1,900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  :root { --blue:#1A6B3C; --blue-dark:#0F4526; --blue-deep:#071A0F; --accent:#D4A820; --white:#FFFFFF; --off-white:#F4F7FB; --gray:#8A9BB0; --text:#0D1B2A; --border:#DDE4EF; }
+  body { font-family:'Noto Sans JP',sans-serif; background:var(--off-white); color:var(--text); }
+
+  nav { background:var(--blue-deep); display:flex; align-items:center; justify-content:space-between; padding:0 2rem; height:64px; border-bottom:2px solid var(--accent); position:sticky; top:0; z-index:100; }
+  .nav-logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+    .nav-logo .emblem-img {
+    width: 48px; height: 48px;
+    object-fit: contain;
+    flex-shrink: 0;
+    border-radius: 0;
+    background: none;
+    border: none;
+  }
+  .nav-logo .name { font-family:'Barlow Condensed',sans-serif; font-size:17px; font-weight:800; color:var(--white); letter-spacing:1px; line-height:1.1; }
+  .nav-logo .name span { display:block; font-size:10px; font-weight:400; color:var(--accent); letter-spacing:1.5px; font-family:'Noto Sans JP',sans-serif; }
+  .nav-links { display:flex; gap:0; list-style:none; }
+  .nav-links a { color:rgba(255,255,255,0.75); text-decoration:none; font-size:13px; font-weight:500; padding:0 14px; height:64px; display:flex; align-items:center; border-bottom:3px solid transparent; transition:all 0.2s; }
+  .nav-links a:hover { color:var(--white); border-bottom-color:var(--accent); }
+  .nav-links a.active { color:var(--accent); border-bottom-color:var(--accent); }
+  @media(max-width:768px){ .nav-links{display:none;} nav{padding:0 1.25rem;} }
+
+  .page-header { background:var(--blue-dark); padding:52px 3rem 44px; position:relative; overflow:hidden; }
+  .page-header::after { content:'CLUB'; position:absolute; right:2rem; top:50%; transform:translateY(-50%); font-family:'Barlow Condensed',sans-serif; font-size:120px; font-weight:900; font-style:italic; color:rgba(255,255,255,0.04); pointer-events:none; line-height:1; }
+  .eyebrow { font-family:'Barlow Condensed',sans-serif; font-size:12px; font-weight:700; letter-spacing:4px; color:var(--accent); margin-bottom:8px; }
+  .page-header h1 { font-family:'Barlow Condensed',sans-serif; font-size:48px; font-weight:900; color:var(--white); line-height:1; }
+  .page-header h1 em { color:var(--accent); font-style:normal; }
+  .header-line { width:40px; height:3px; background:var(--accent); margin-top:12px; }
+
+  .wrap { max-width:900px; margin:0 auto; padding:56px 3rem; }
+  @media(max-width:768px){ .wrap{padding:36px 1.25rem;} }
+
+  .sec-ey { font-family:'Barlow Condensed',sans-serif; font-size:12px; font-weight:700; letter-spacing:4px; color:var(--blue); margin-bottom:6px; }
+  .sec-title { font-family:'Barlow Condensed',sans-serif; font-size:32px; font-weight:900; color:var(--text); line-height:1; }
+  .sec-title em { color:var(--blue); font-style:normal; }
+  .sec-line { width:36px; height:3px; background:var(--accent); margin-top:10px; margin-bottom:32px; }
+
+  /* PHILOSOPHY */
+  .philosophy-block { background:var(--blue-deep); padding:48px 40px; position:relative; overflow:hidden; margin-bottom:56px; }
+  .philosophy-block::before { content:'"'; position:absolute; left:20px; top:10px; font-size:160px; font-family:'Barlow Condensed',sans-serif; font-weight:900; color:rgba(255,255,255,0.04); line-height:1; pointer-events:none; }
+  .philosophy-main { font-family:'Barlow Condensed', sans-serif; font-size:clamp(22px,4vw,36px); font-weight:900; color:var(--white); line-height:1.3; letter-spacing:0.5px; margin-bottom:24px; position:relative; z-index:1; }
+  .philosophy-main em { color:var(--accent); font-style:normal; }
+  .philosophy-text { font-size:14px; color:rgba(255,255,255,0.7); line-height:2.2; position:relative; z-index:1; max-width:600px; }
+
+  /* PROFILE TABLE */
+  .profile-table { width:100%; border-collapse:collapse; margin-bottom:56px; font-size:14px; }
+  .profile-table tr { border-bottom:1px solid var(--border); }
+  .profile-table th { background:transparent; padding:14px 16px; text-align:left; font-weight:700; color:var(--blue); width:160px; font-size:13px; vertical-align:top; }
+  .profile-table td { padding:14px 16px; background:var(--white); color:var(--text); line-height:1.8; }
+  .profile-table tr:first-child td { border-top:1px solid var(--border); }
+
+  /* HISTORY */
+  .timeline { position:relative; padding-left:24px; margin-bottom:56px; }
+  .timeline::before { content:''; position:absolute; left:7px; top:4px; bottom:4px; width:2px; background:var(--border); }
+  .tl-item { position:relative; margin-bottom:24px; }
+  .tl-dot { position:absolute; left:-24px; top:4px; width:14px; height:14px; background:var(--white); border:2px solid var(--blue); border-radius:50%; }
+  .tl-item.accent .tl-dot { background:var(--accent); border-color:var(--accent); }
+  .tl-year { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:900; color:var(--blue); line-height:1; margin-bottom:2px; }
+  .tl-item.accent .tl-year { color:var(--accent); }
+  .tl-text { font-size:13px; color:var(--text); line-height:1.7; }
+
+  /* CTA */
+  .cta-bar { background:var(--blue); padding:36px 40px; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+  .cta-text { font-family:'Barlow Condensed',sans-serif; font-size:24px; font-weight:900; color:var(--white); }
+  .cta-text span { color:var(--accent); }
+  .btn-cta { background:var(--accent); color:var(--blue-deep); padding:13px 28px; font-size:14px; font-weight:900; font-family:'Noto Sans JP',sans-serif; text-decoration:none; display:inline-block; transition:all 0.2s; clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%); }
+  .btn-cta:hover { background:#E8C040; }
+
+  footer { background:var(--blue-deep); padding:24px 3rem; text-align:center; color:rgba(255,255,255,0.4); font-size:12px; }
+  footer a { color:var(--accent); text-decoration:none; }
+
+  /* SNS ICONS */
+  .sns-bar {
+    display: flex; align-items: center; gap: 4px;
+  }
+  .sns-link {
+    display: flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    border-radius: 50%;
+    transition: all 0.2s;
+  }
+  .sns-link:hover { color: var(--white); background: rgba(255,255,255,0.1); }
+  .sns-link.line:hover { color: #06C755; }
+  .sns-link.youtube:hover { color: #FF0000; }
+  .sns-link.instagram:hover { color: #E1306C; }
+
+  /* footer SNS */
+  .footer-sns {
+    display: flex; gap: 8px; margin-top: 16px;
+  }
+  .footer-sns a {
+    display: flex; align-items: center; justify-content: center;
+    width: 38px; height: 38px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    border-radius: 50%;
+    transition: all 0.2s;
+  }
+  .footer-sns a:hover { background: rgba(255,255,255,0.15); color: var(--white); }
+  .footer-sns a.line:hover { border-color: #06C755; color: #06C755; }
+  .footer-sns a.youtube:hover { border-color: #FF0000; color: #FF0000; }
+  .footer-sns a.instagram:hover { border-color: #E1306C; color: #E1306C; }
+
+  @media(max-width:768px){
+    .wrap { padding:36px 1.25rem; }
+    .rep-grid { grid-template-columns:1fr !important; }
+  }
+  .nav-logo .logo-img { height: 36px; width: auto; object-fit: contain; flex-shrink: 0; display: block; mix-blend-mode: screen; }
+  @media (max-width: 480px) { .nav-logo .logo-img { height: 28px; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="grande_homepage.html">
+    <img src="emblem.png" class="emblem-img" alt="GRANDE FC エンブレム">
+    <img src="grande.png" class="logo-img" alt="GRANDE FC">
+  </a>
+  <ul class="nav-links">
+    <li><a href="grande_about.html" class="active">クラブについて</a></li>
+    <li><a href="grande_players.html">選手・スタッフ</a></li>
+    <li><a href="grande_recruit.html">選手募集</a></li>
+    <li><a href="grande_schedule.html">スケジュール</a></li>
+    <li><a href="grande_match_planner.html">試合結果</a></li>
+    <li><a href="grande_news.html">ニュース</a></li>
+    <li><a href="grande_contact.html" style="color:var(--accent);">お問い合わせ</a></li>
+  </ul>
+  <div class="sns-bar">
+    <a href="https://line.me/R/ti/p/@200sfwtn" target="_blank" class="sns-link line" title="LINE"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg></a>
+    <a href="https://m.youtube.com/@corazon-grande9642?ra=m" target="_blank" class="sns-link youtube" title="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+    <a href="https://www.instagram.com/yatsugatake.grande/" target="_blank" class="sns-link instagram" title="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a>
+  </div>
+</nav>
+
+
+<div class="page-header">
+  <div class="eyebrow">ABOUT THE CLUB</div>
+  <h1>クラブ<em>について</em></h1>
+  <div class="header-line"></div>
+</div>
+
+<div class="wrap">
+
+  <!-- PHILOSOPHY -->
+  <div class="sec-ey">CLUB PHILOSOPHY</div>
+  <div class="sec-title">クラブ<em>理念</em></div>
+  <div class="sec-line"></div>
+
+  <div class="philosophy-block">
+    <div class="philosophy-main">
+      夢に向かって<em>努力できる子供</em>に<br>なって欲しい
+    </div>
+    <div class="philosophy-text">
+      2001年、北杜市・韮崎市初のクラブチームとして創設した八ヶ岳グランデフットボールクラブ。八ヶ岳の大自然のもと、地域に愛されるクラブ、そして子供達が人間として成長していけるチーム作りを目指しています。<br><br>
+      フットボールを通じて、自分で人生を切り開いていける力を育て、人生を楽しめる大人になって欲しいと願っています。勝利だけを追い求めるのではなく、仲間と共に成長し、自立した人間を育てることが私たちの使命です。
+    </div>
+  </div>
+
+  <!-- PROFILE -->
+  <div class="sec-ey">CLUB PROFILE</div>
+  <div class="sec-title">クラブ<em>概要</em></div>
+  <div class="sec-line"></div>
+
+  <table class="profile-table">
+    <tr><th>クラブ名</th><td>八ヶ岳グランデフットボールクラブ</td></tr>
+    <tr><th>英語表記</th><td>Yatsugatake Grande Football Club</td></tr>
+    <tr><th>設立</th><td>2001年</td></tr>
+    <tr><th>所在地</th><td>山梨県北杜市</td></tr>
+    <tr><th>代表者</th><td>田畑 雅宏</td></tr>
+    <tr><th>カテゴリー</th><td>ジュニアユース（U-15）・ジュニア（U-12）・サッカースクール</td></tr>
+    <tr><th>主な活動地域</th><td>山梨県北杜市を中心に活動</td></tr>
+    <tr><th>在籍選手地域</th><td>山梨県北杜市・韮崎市・南アルプス市、長野県富士見町・原村・茅野市・川上村 ほか</td></tr>
+    <tr><th>主な活動グラウンド</th><td>白州総合運動場・長坂総合スポーツ公園</td></tr>
+  </table>
+
+  <!-- 代表挨拶 -->
+  <div class="sec-ey">MESSAGE</div>
+  <div class="sec-title">代表<em>挨拶</em></div>
+  <div class="sec-line"></div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start; margin-bottom:56px;">
+    <div>
+      <p style="font-size:15px; line-height:2.4; color:#4A5A6A; margin-bottom:24px;">
+        八ヶ岳グランデフットボールクラブは、選手の主体性と人間力の育成に力を入れているフットボールクラブです。<br><br>
+        「夢に向かって努力できる子供になって欲しい」その想いで、2001年に北杜市・韮崎市初のクラブチームを創設しました。<br><br>
+        地域に愛されるクラブ、そして子供達が人間として成長していけるチーム作りを目指しております。<br><br>
+        フットボールを通じて、自分で人生を切り開いていける。人生を楽しめる大人になって欲しいと願っております。
+      </p>
+      <div style="text-align:right; border-top:1px solid var(--border); padding-top:20px; margin-bottom:16px;">
+        <div style="font-size:14px; color:var(--gray); margin-bottom:6px;">八ヶ岳グランデフットボールクラブ</div>
+        <div style="font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:900; color:var(--text); letter-spacing:2px;">代表 兼 創設者　田 畑 雅 宏</div>
+      </div>
+      <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a href="https://note.com/dens/n/n59df30fea372" target="_blank" style="font-size:13px; color:var(--blue); text-decoration:none; border-bottom:1px solid currentColor;">2023年・年頭所感 →</a>
+        <a href="https://note.com/dens/n/ne395909a4548" target="_blank" style="font-size:13px; color:var(--blue); text-decoration:none; border-bottom:1px solid currentColor;">2022年・年頭所感 →</a>
+      </div>
+    </div>
+    <div>
+      <img src="https://www.grande.or.jp/_src/60470112/dscn0572.png?v=1750049329706" alt="田畑雅宏 代表" style="width:100%; object-fit:cover; border:1px solid var(--border);">
+      <div style="margin-top:14px; font-size:12px; color:var(--gray); line-height:2;">
+        日本スポーツ協会コーチ、JFAスポーツマネージャーGrade3（最上位）認定、JFAサッカーB級コーチ、JFAフットサルB級コーチ、JFAキッズリーダー、山梨県サッカー協会理事（2008年退任）、山梨県サッカー協会広報委員長（2008年退任）、山梨県サッカー協会フットサル委員長（2009年退任）、山梨県スポーツ指導者協議会理事（2017年〜現在）、北杜市サッカー協会副会長（2021年〜現在）
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-bar">
+    <div class="cta-text">一緒にグランデで<span>サッカーをしよう</span></div>
+    <a href="grande_recruit.html" class="btn-cta">体験練習会に申し込む →</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 Yatsugatake Grande Football Club. All Rights Reserved. ／ <a href="grande_contact.html">お問い合わせ</a></p>
+</footer>
+</body>
+</html>

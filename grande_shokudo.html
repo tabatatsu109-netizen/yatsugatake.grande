@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>グランデ食堂│八ヶ岳グランデフットボールクラブ</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,800;0,900;1,900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  :root {
+    --green: #1A6B3C; --green-dark: #0F4526; --green-deep: #071A0F;
+    --gold: #D4A820; --gold-light: #E8C040;
+    --warm: #7A5A00; --warm-light: #FDF6E3;
+    --white: #FFFFFF; --off-white: #F9F7F2;
+    --gray: #8A9BB0; --text: #0D1B2A; --border: #E5DFD0;
+  }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Noto Sans JP',sans-serif; background:var(--off-white); color:var(--text); overflow-x:hidden; }
+
+  /* NAV */
+  nav { background:var(--green-deep); display:flex; align-items:center; justify-content:space-between; padding:0 2rem; height:64px; border-bottom:2px solid var(--gold); position:sticky; top:0; z-index:100; }
+  .nav-logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+  .nav-logo .emblem-img { width:44px; height:44px; object-fit:contain; flex-shrink:0; }
+  .nav-logo .name { font-family:'Barlow Condensed',sans-serif; font-size:17px; font-weight:800; color:var(--white); letter-spacing:1px; line-height:1.1; }
+  .nav-logo .name span { display:block; font-size:10px; font-weight:400; color:var(--gold); letter-spacing:1.5px; font-family:'Noto Sans JP',sans-serif; white-space:nowrap; }
+  .nav-back { color:rgba(255,255,255,0.6); font-size:13px; text-decoration:none; display:flex; align-items:center; gap:6px; transition:color 0.2s; }
+  .nav-back:hover { color:var(--gold); }
+  @media(max-width:768px){ nav{padding:0 1.25rem;} .nav-logo .name span{display:none;} }
+
+  /* HERO */
+  .hero {
+    background: var(--green-deep);
+    min-height: 75vh;
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding: 80px 4rem;
+  }
+
+  /* 背景テクスチャ（米粒イメージ） */
+  .hero-pattern {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle, rgba(212,168,32,0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events:none;
+  }
+  .hero-gradient {
+    position:absolute; inset:0;
+    background: linear-gradient(135deg, rgba(7,26,15,0.95) 40%, rgba(15,69,38,0.7) 100%);
+    pointer-events:none;
+  }
+
+  /* お椀の装飾 */
+  .hero-bowl {
+    position: absolute; right: -40px; top: 50%; transform: translateY(-50%);
+    width: 500px; height: 500px;
+    border: 1px solid rgba(212,168,32,0.08);
+    border-radius: 50%;
+  }
+  .hero-bowl2 {
+    position: absolute; right: 60px; top: 50%; transform: translateY(-50%);
+    width: 360px; height: 360px;
+    border: 1px solid rgba(212,168,32,0.12);
+    border-radius: 50%;
+  }
+
+  .hero-content { position:relative; z-index:2; max-width:600px; }
+  .hero-eyebrow { font-family:'Barlow Condensed',sans-serif; font-size:12px; font-weight:700; letter-spacing:4px; color:var(--gold); margin-bottom:14px; }
+  .hero-title {
+    font-family:'Barlow Condensed',sans-serif;
+    font-size: clamp(56px, 9vw, 96px);
+    font-weight:900; color:var(--white); line-height:0.95;
+    letter-spacing:-1px; margin-bottom:16px;
+  }
+  .hero-title em { color:var(--gold); font-style:normal; display:block; }
+  .hero-copy {
+    font-size:18px; font-weight:700; color:rgba(255,255,255,0.9);
+    line-height:1.7; margin-bottom:12px;
+    border-left:3px solid var(--gold); padding-left:16px;
+  }
+  .hero-sub { font-size:14px; color:rgba(255,255,255,0.55); line-height:2; }
+
+  /* SECTION */
+  .section { padding:72px 2rem; max-width:820px; margin:0 auto; }
+  .s-eyebrow { font-family:'Barlow Condensed',sans-serif; font-size:12px; font-weight:700; letter-spacing:4px; color:var(--green); margin-bottom:6px; }
+  .s-title { font-family:'Barlow Condensed',sans-serif; font-size:36px; font-weight:900; color:var(--text); line-height:1; margin-bottom:10px; }
+  .s-title em { color:var(--green); font-style:normal; }
+  .s-line { width:36px; height:3px; background:var(--gold); margin-bottom:28px; }
+  .s-text { font-size:15px; line-height:2.2; color:#4A5A6A; }
+  .s-text strong { color:var(--text); font-weight:700; }
+
+  /* 4つのこだわりカード */
+  .kodawari-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--border); margin-top:32px; }
+  @media(max-width:600px){ .kodawari-grid{ grid-template-columns:1fr; } }
+  .kodawari-item { background:var(--white); padding:24px 20px; }
+  .kodawari-num {
+    font-family:'Barlow Condensed',sans-serif; font-size:48px; font-weight:900; font-style:italic;
+    color:rgba(26,107,60,0.08); line-height:1; margin-bottom:4px;
+  }
+  .kodawari-title { font-size:15px; font-weight:700; color:var(--text); margin-bottom:6px; }
+  .kodawari-desc { font-size:13px; color:var(--gray); line-height:1.8; }
+  .kodawari-icon { font-size:24px; margin-bottom:8px; }
+
+  /* PHILOSOPHY */
+  .philosophy { background:var(--green-deep); padding:56px 40px; margin:40px 0; position:relative; overflow:hidden; }
+  .philosophy::before {
+    content:'"';
+    position:absolute; left:-10px; top:-20px;
+    font-size:200px; font-family:'Barlow Condensed',sans-serif; font-weight:900;
+    color:rgba(255,255,255,0.03); line-height:1; pointer-events:none;
+  }
+  .philosophy-text {
+    font-size:clamp(18px,3vw,24px); font-weight:700;
+    color:var(--white); line-height:1.8;
+    position:relative; z-index:1;
+    border-left:3px solid var(--gold); padding-left:20px;
+  }
+  .philosophy-text em { color:var(--gold); font-style:normal; }
+
+  /* BMI セクション */
+  .bmi-block {
+    background:var(--warm-light); border:1px solid #E8D8A0;
+    padding:32px; display:flex; gap:20px; align-items:flex-start; margin:28px 0;
+  }
+  .bmi-icon { font-size:36px; flex-shrink:0; margin-top:2px; }
+  .bmi-body h3 { font-size:16px; font-weight:700; color:var(--warm); margin-bottom:8px; }
+  .bmi-body p { font-size:14px; color:#6A5020; line-height:1.9; }
+  .bmi-link {
+    display:inline-flex; align-items:center; gap:6px;
+    margin-top:14px; font-size:13px; font-weight:700;
+    color:var(--warm); text-decoration:none;
+    border-bottom:1px solid var(--gold); padding-bottom:2px;
+  }
+
+  /* 感謝セクション */
+  .thanks-section { background:var(--white); padding:1px 0; }
+  .thanks-list { list-style:none; margin-top:24px; }
+  .thanks-item {
+    display:flex; gap:14px; padding:14px 0;
+    border-bottom:1px solid var(--border); font-size:14px; color:var(--text); line-height:1.7;
+  }
+  .thanks-item:last-child { border-bottom:none; }
+  .thanks-dot { width:8px; height:8px; background:var(--gold); border-radius:50%; flex-shrink:0; margin-top:7px; }
+
+  /* CTA */
+  .cta-section {
+    background:linear-gradient(135deg, var(--green-dark) 0%, var(--green) 100%);
+    padding:56px 2rem; text-align:center;
+  }
+  .cta-title { font-family:'Barlow Condensed',sans-serif; font-size:36px; font-weight:900; color:var(--white); margin-bottom:8px; }
+  .cta-sub { font-size:14px; color:rgba(255,255,255,0.7); margin-bottom:28px; line-height:1.8; }
+  .btn-cta {
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--gold); color:var(--green-deep);
+    padding:15px 36px; font-size:15px; font-weight:900;
+    font-family:'Noto Sans JP',sans-serif; text-decoration:none;
+    transition:all 0.2s;
+    clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+  }
+  .btn-cta:hover { background:var(--gold-light); transform:translateY(-2px); }
+  .btn-outline-white {
+    display:inline-flex; align-items:center; gap:8px;
+    background:transparent; color:rgba(255,255,255,0.8);
+    border:1px solid rgba(255,255,255,0.4);
+    padding:14px 28px; font-size:14px; font-weight:500;
+    font-family:'Noto Sans JP',sans-serif; text-decoration:none;
+    transition:all 0.2s; margin-left:12px;
+  }
+  .btn-outline-white:hover { border-color:var(--gold); color:var(--gold); }
+
+  /* PARTNER */
+  .partner-section { padding:48px 2rem; max-width:820px; margin:0 auto; text-align:center; }
+  .partner-label { font-size:12px; color:var(--gray); letter-spacing:2px; font-family:'Barlow Condensed',sans-serif; font-weight:700; margin-bottom:20px; }
+  .partner-logos { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+  .partner-logo { background:var(--white); border:1px solid var(--border); padding:12px 24px; font-size:13px; font-weight:700; color:var(--gray); text-decoration:none; transition:border-color 0.2s; }
+  .partner-logo:hover { border-color:var(--green); color:var(--green); }
+
+  footer { background:var(--green-deep); padding:24px 2rem; text-align:center; color:rgba(255,255,255,0.4); font-size:12px; }
+  footer a { color:var(--gold); text-decoration:none; }
+
+  /* フェードイン */
+  .fade-in { opacity:0; transform:translateY(24px); transition:opacity 0.7s ease, transform 0.7s ease; }
+  .fade-in.visible { opacity:1; transform:translateY(0); }
+
+  @media(max-width:768px){
+    .hero { padding:60px 1.5rem; min-height:auto; }
+    .section { padding:48px 1.25rem; }
+    .philosophy { padding:36px 24px; }
+    .cta-section { padding:40px 1.25rem; }
+    .btn-outline-white { margin-left:0; margin-top:10px; }
+    .bmi-block { flex-direction:column; }
+  }
+  .nav-logo .logo-img { height: 36px; width: auto; object-fit: contain; flex-shrink: 0; display: block; mix-blend-mode: screen; }
+  @media (max-width: 480px) { .nav-logo .logo-img { height: 28px; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="grande_homepage.html">
+    <img src="emblem.png" class="emblem-img" alt="GRANDE FC エンブレム">
+    <img src="grande.png" class="logo-img" alt="GRANDE FC">
+  </a>
+  <a class="nav-back" href="grande_homepage.html">← TOPへ戻る</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-pattern"></div>
+  <div class="hero-gradient"></div>
+  <div class="hero-bowl"></div>
+  <div class="hero-bowl2"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">食育 × フットボール</div>
+    <h1 class="hero-title">
+      グランデ
+      <em>食堂</em>
+    </h1>
+    <p class="hero-copy">食べること"から、強くなれ。</p>
+    <p class="hero-sub">
+      白州米・地元野菜・栄養士監修。<br>
+      強い体と折れない心を、食卓から育てる。
+    </p>
+  </div>
+</div>
+
+<!-- PHILOSOPHY -->
+<div class="section fade-in">
+  <div class="s-eyebrow">PHILOSOPHY</div>
+  <h2 class="s-title">夢の<em>実現へ</em></h2>
+  <div class="s-line"></div>
+  <p class="s-text">
+    サッカー選手として、そして一人の人として心も体も大きく成長してほしい。<br><br>
+    どれだけ練習をしても、体がつくられていなければ力は出ません。どれだけ夢があっても、健康な体がなければ追いかけられません。<br><br>
+    グランデ食堂は、「<strong>食べる</strong>」ことを通じて、強い体、折れない心、仲間と育つ力を養う場所です。
+  </p>
+
+  <div class="philosophy">
+    <p class="philosophy-text">
+      苦手なものにも挑戦する勇気。<br>
+      仲間と食卓を囲む楽しさ。<br>
+      毎日の小さな積み重ねが、<em>明日の自分をつくっていく。</em>
+    </p>
+  </div>
+</div>
+
+<!-- 4つのこだわり -->
+<div style="background:var(--white); padding:1px 0;">
+<div class="section fade-in">
+  <div class="s-eyebrow">OUR COMMITMENT</div>
+  <h2 class="s-title">4つの<em>こだわり</em></h2>
+  <div class="s-line"></div>
+
+  <div class="kodawari-grid">
+    <div class="kodawari-item">
+      <div class="kodawari-num">01</div>
+      <div class="kodawari-icon">🌾</div>
+      <div class="kodawari-title">地元の素材にこだわる</div>
+      <div class="kodawari-desc">白州米と、地元の農家さんが育てた新鮮な野菜を使用。地域の恵みを選手の力に。</div>
+    </div>
+    <div class="kodawari-item">
+      <div class="kodawari-num">02</div>
+      <div class="kodawari-icon">👩‍⚕️</div>
+      <div class="kodawari-title">栄養士が監修</div>
+      <div class="kodawari-desc">成長期の選手に最適な栄養バランスを、専門家がしっかり考えた食事を提供します。</div>
+    </div>
+    <div class="kodawari-item">
+      <div class="kodawari-num">03</div>
+      <div class="kodawari-icon">🥗</div>
+      <div class="kodawari-title">体に優しい味付け</div>
+      <div class="kodawari-desc">化学調味料を極力使わないため、体への負担が少ない。素材本来の味を大切に。</div>
+    </div>
+    <div class="kodawari-item">
+      <div class="kodawari-num">04</div>
+      <div class="kodawari-icon">🍚</div>
+      <div class="kodawari-title">おかわり自由</div>
+      <div class="kodawari-desc">ごはん・汁物はおかわり自由！成長期の選手が思い切りたくさん食べられます。</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- 食事への意識改革 -->
+<div class="section fade-in">
+  <div class="s-eyebrow">AWARENESS</div>
+  <h2 class="s-title">食事への<em>意識改革</em></h2>
+  <div class="s-line"></div>
+  <p class="s-text">
+    ただ食事を食べるだけではなく、<strong>自分の体と向き合う「習慣」</strong>を身につけることが大切です。<br><br>
+    毎月のBMI測定を通して、「自分の体がどう変化しているのか」「今の食生活で足りているのか」を選手自身が確認します。これは数値を競うものではなく、"今の自分を知る"ことから始める意識づくりです。
+  </p>
+
+  <div class="bmi-block">
+    <div class="bmi-icon">📊</div>
+    <div class="bmi-body">
+      <h3>毎月のBMI測定</h3>
+      <p>苦手な食べ物にチャレンジしたり、なぜその食事が必要なのかを知ったりする中で、選手自身の「気づき」や「変わろうとする力」が少しずつ育っていきます。たった週に一度の時間でも、そこから日常の意識が変わればプレーも変わっていく。</p>
+      <a href="https://docs.google.com/spreadsheets/d/1oR67ChN6AhZDMcO1_-7_9rnHo0kV3VS4QyqZGBhPCg0/edit?usp=sharing" target="_blank" class="bmi-link">BMIチェック表（会員ページ）→</a>
+    </div>
+  </div>
+</div>
+
+<!-- 感謝 -->
+<div class="thanks-section">
+<div class="section fade-in">
+  <div class="s-eyebrow">GRATITUDE</div>
+  <h2 class="s-title">感謝の<em>気持ち</em></h2>
+  <div class="s-line"></div>
+  <p class="s-text">グランデ食堂は、たくさんの人の支えによって成り立っています。</p>
+
+  <ul class="thanks-list">
+    <li class="thanks-item"><div class="thanks-dot"></div><span>献立を一緒に考え、成長期の子どもたちに必要な栄養を届けてくれる<strong>栄養士さん</strong></span></li>
+    <li class="thanks-item"><div class="thanks-dot"></div><span>心のこもった美味しい食事を届けてくださる<strong>お店の方々</strong></span></li>
+    <li class="thanks-item"><div class="thanks-dot"></div><span>安全でおいしい食材を提供してくださる<strong>地域の農家さん</strong></span></li>
+    <li class="thanks-item"><div class="thanks-dot"></div><span>日々の生活の中で子どもたちの挑戦を支えてくださる<strong>保護者の皆さま</strong></span></li>
+    <li class="thanks-item"><div class="thanks-dot"></div><span>この取り組みに共感し、費用面での支援という形で力を貸してくださる<strong>サポーター企業さま</strong></span></li>
+  </ul>
+
+  <p class="s-text" style="margin-top:24px;">関わる全ての皆様に心から感謝しています。本当にありがとうございます。</p>
+</div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-title">"食べること"から、強くなれ。</div>
+  <p class="cta-sub">グランデ食堂について、詳しくはお問い合わせください。</p>
+  <a href="grande_contact.html" class="btn-cta">お問い合わせ →</a>
+  <a href="grande_homepage.html" class="btn-outline-white">TOPへ戻る</a>
+</div>
+
+<!-- PARTNER -->
+<div class="partner-section">
+  <div class="partner-label">SUPPORTED BY</div>
+  <div class="partner-logos">
+    <a href="https://www.alps-hs.co.jp/" target="_blank" class="partner-logo">株式会社アルプス</a>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Yatsugatake Grande Football Club. All Rights Reserved. ／ <a href="grande_contact.html">お問い合わせ</a></p>
+</footer>
+
+<script>
+// スクロールフェードイン
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

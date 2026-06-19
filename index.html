@@ -1,0 +1,2135 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>八ヶ岳グランデフットボールクラブ</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,800;0,900;1,800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue: #1A6B3C;
+    --blue-dark: #0F4526;
+    --blue-deep: #071A0F;
+    --blue-light: #2A8C52;
+    --accent: #D4A820;
+    --white: #FFFFFF;
+    --off-white: #F4F7FB;
+    --gray: #8A9BB0;
+    --text: #0D1B2A;
+    --radius: 4px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: transparent;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 64px;
+    border-bottom: 2px solid transparent;
+    transition: background 0.35s ease, border-color 0.35s ease;
+  }
+
+  nav.nav-solid {
+    background: var(--blue-deep);
+    border-bottom-color: var(--accent);
+  }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+  }
+
+    .nav-logo .emblem-img {
+    width: 48px; height: 48px;
+    object-fit: contain;
+    flex-shrink: 0;
+    border-radius: 0;
+    background: none;
+    border: none;
+  }
+
+  .nav-logo .name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px; font-weight: 800; letter-spacing: 1px;
+    color: var(--white);
+    line-height: 1.1;
+  }
+
+  .nav-logo .name span {
+    display: block; font-size: 11px; font-weight: 400;
+    color: var(--accent); letter-spacing: 1px;
+    font-family: 'Noto Sans JP', sans-serif;
+    white-space: nowrap;
+  }
+  @media (max-width: 480px) {
+    .nav-logo .name span { display: none; }
+    .nav-logo .name { font-size: 15px; }
+  }
+
+  .nav-links {
+    display: flex; gap: 0; list-style: none;
+  }
+
+  .nav-links a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 0 16px; height: 64px;
+    display: flex; align-items: center;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+    border-bottom: 3px solid transparent;
+  }
+
+  .nav-links a:hover {
+    color: var(--white);
+    border-bottom-color: var(--accent);
+    background: rgba(212,168,32,0.08);
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    margin-top: 0;
+    height: 100vh;
+    height: 100svh;
+    min-height: 640px;
+    background: var(--blue-deep);
+    position: relative;
+    overflow: hidden;
+    display: flex; align-items: center;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 120% 80% at 75% 20%, rgba(26,107,60,0.45) 0%, transparent 55%),
+      radial-gradient(ellipse 90% 70% at 15% 90%, rgba(212,168,32,0.10) 0%, transparent 50%),
+      linear-gradient(135deg, #06140C 0%, #0A2418 55%, #0F4526 100%);
+  }
+
+  /* Geometric diagonal accent */
+  .hero-diagonal {
+    position: absolute;
+    right: -5%;
+    top: 0; bottom: 0;
+    width: 60%;
+    background: linear-gradient(160deg, var(--blue-dark) 0%, var(--blue) 100%);
+    clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
+    opacity: 0.45;
+  }
+
+  .hero-diagonal2 {
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 48%;
+    background: linear-gradient(180deg, var(--blue-dark) 0%, var(--blue-deep) 100%);
+    clip-path: polygon(35% 0%, 100% 0%, 100% 100%, 8% 100%);
+    opacity: 0.35;
+  }
+
+  /* Gold diagonal slash accents */
+  .hero-slash {
+    position: absolute;
+    top: -10%; bottom: -10%;
+    width: 3px;
+    background: linear-gradient(to bottom, transparent, var(--accent) 40%, var(--accent) 60%, transparent);
+    transform: rotate(18deg);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+  .hero-slash.s1 { right: 26%; }
+  .hero-slash.s2 { right: 22%; width: 1px; opacity: 0.35; }
+
+  /* Giant watermark typography */
+  .hero-watermark {
+    position: absolute;
+    bottom: -2.5vw;
+    left: -0.5vw;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: clamp(120px, 22vw, 340px);
+    line-height: 0.8;
+    letter-spacing: -0.02em;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(255,255,255,0.07);
+    user-select: none;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  /* Field lines decoration */
+  /* Canvas field animation */
+  #fieldCanvas {
+    position: absolute;
+    right: 4%; top: 50%;
+    transform: translateY(-50%);
+    width: 480px; height: 320px;
+    opacity: 0.7;
+    pointer-events: none;
+  }
+  @media (max-width: 900px) { #fieldCanvas { display: none; } }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 0 4rem;
+    max-width: 1100px;
+    animation: heroRise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes heroRise {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: transparent;
+    color: var(--accent);
+    border-left: 3px solid var(--accent);
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 4px;
+    padding: 4px 0 4px 14px;
+    margin-bottom: 28px;
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+
+  .hero-title {
+    font-family: 'Noto Sans JP', 'Barlow Condensed', sans-serif;
+    font-size: clamp(30px, 7vw, 96px);
+    font-weight: 900;
+    line-height: 1.05;
+    color: #FFFFFF;
+    letter-spacing: 0.02em;
+    margin-bottom: 18px;
+    white-space: nowrap;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.65), 0 8px 40px rgba(0,0,0,0.35);
+  }
+
+  .hero-title .accent-word {
+    color: #D4A820;
+    font-style: normal;
+    display: inline;
+  }
+
+  .hero-en {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-style: italic;
+    font-size: clamp(14px, 1.6vw, 20px);
+    letter-spacing: 6px;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 26px;
+    text-transform: uppercase;
+  }
+
+  .hero-subtitle {
+    font-size: 15px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.9;
+    max-width: 520px;
+    margin-bottom: 40px;
+  }
+
+  .hero-ctas {
+    display: flex; gap: 12px; flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--blue-deep);
+    border: none;
+    padding: 14px 32px;
+    font-size: 14px; font-weight: 700;
+    letter-spacing: 1px;
+    font-family: 'Noto Sans JP', sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.2s;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+    box-shadow: 0 4px 18px rgba(212,168,32,0.35);
+  }
+
+  .btn-primary:hover {
+    background: #E8C040;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(212,168,32,0.55);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    border: 1.5px solid rgba(255,255,255,0.55);
+    padding: 14px 32px;
+    font-size: 14px; font-weight: 500;
+    font-family: 'Noto Sans JP', sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.2s;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(255,255,255,0.06);
+  }
+
+  /* Scroll indicator */
+  .hero-scroll {
+    position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+    z-index: 2;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: rgba(255,255,255,0.4);
+    font-size: 11px; letter-spacing: 2px;
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+
+  .scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, rgba(212,168,32,0.6), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* ===== NEWS TICKER ===== */
+  .ticker {
+    background: var(--blue);
+    overflow: hidden; height: 44px;
+    display: flex; align-items: center;
+  }
+
+  .ticker-label {
+    background: var(--accent);
+    color: var(--blue-deep);
+    font-size: 12px; font-weight: 700;
+    padding: 0 16px; height: 100%;
+    display: flex; align-items: center;
+    letter-spacing: 2px;
+    font-family: 'Barlow Condensed', sans-serif;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .ticker-track {
+    flex: 1; overflow: hidden; position: relative;
+  }
+
+  .ticker-inner {
+    display: flex; gap: 64px;
+    animation: ticker 30s linear infinite;
+    white-space: nowrap;
+  }
+
+  .ticker-inner span {
+    color: rgba(255,255,255,0.85);
+    font-size: 13px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .ticker-inner span::before {
+    content: '▶';
+    color: var(--accent);
+    font-size: 8px;
+  }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ===== SECTION BASE ===== */
+  section { padding: 80px 4rem; }
+
+  .section-header {
+    margin-bottom: 48px;
+  }
+
+  .section-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 4px;
+    color: var(--blue);
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(36px, 5vw, 52px);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--text);
+    letter-spacing: -0.5px;
+  }
+
+  .section-title em {
+    color: var(--blue); font-style: normal;
+  }
+
+  .section-line {
+    width: 48px; height: 3px;
+    background: var(--accent);
+    margin-top: 12px;
+  }
+
+  /* ===== NEWS ===== */
+  .news-section {
+    background: var(--white);
+  }
+
+  .news-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 32px;
+  }
+
+  .news-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    gap: 1px;
+    background: #DDE4EF;
+    border: 1px solid #DDE4EF;
+  }
+
+  .news-card {
+    background: var(--white);
+    padding: 28px;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .news-card:hover {
+    background: #F0F7F3;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(26,107,60,0.15);
+    position: relative; z-index: 1;
+  }
+
+  .news-card.featured { grid-row: span 2; }
+
+  .news-cat {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--blue);
+    font-family: 'Barlow Condensed', sans-serif;
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .news-cat::before {
+    content: '';
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  .news-card.featured .news-title { font-size: 22px; line-height: 1.4; }
+
+  .news-title {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.5;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .news-date {
+    font-size: 12px;
+    color: var(--gray);
+  }
+
+  .news-img {
+    width: 100%; aspect-ratio: 16/9;
+    background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 100%);
+    margin-bottom: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 48px; font-weight: 900;
+    color: rgba(255,255,255,0.15);
+    letter-spacing: -2px;
+    overflow: hidden;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+  }
+
+  /* ===== ABOUT ===== */
+  .about-section {
+    background: var(--blue-deep);
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-section .section-eyebrow { color: var(--accent); }
+  .about-section .section-title { color: var(--white); }
+
+  .about-accent {
+    position: absolute;
+    right: -100px; top: -100px;
+    width: 500px; height: 500px;
+    border: 1px solid rgba(212,168,32,0.08);
+    border-radius: 50%;
+  }
+
+  .about-accent2 {
+    position: absolute;
+    right: -50px; top: -50px;
+    width: 300px; height: 300px;
+    border: 1px solid rgba(212,168,32,0.12);
+    border-radius: 50%;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .about-text p {
+    font-size: 15px;
+    line-height: 2;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 20px;
+  }
+
+  .about-text strong { color: var(--accent); font-weight: 700; }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: rgba(212,168,32,0.1);
+  }
+
+  .stat-box {
+    background: rgba(7,26,15,0.85);
+    padding: 32px 24px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 52px; font-weight: 900;
+    color: var(--white);
+    line-height: 1;
+  }
+
+  .stat-num span {
+    color: var(--accent);
+    font-size: 28px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 6px;
+    letter-spacing: 1px;
+  }
+
+  /* ===== CATEGORIES ===== */
+  .cats-section { background: var(--off-white); }
+
+  .cats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .cat-card {
+    background: var(--white);
+    border: 1px solid #DDE4EF;
+    padding: 0;
+    overflow: hidden;
+    transition: all 0.25s;
+    text-decoration: none; color: inherit;
+    display: block;
+  }
+
+  .cat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(26,107,60,0.18);
+    border-color: var(--blue);
+  }
+
+  .cat-header {
+    background: var(--blue-dark);
+    padding: 28px 24px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cat-header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+  }
+
+  .cat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 72px; font-weight: 900;
+    color: rgba(255,255,255,0.08);
+    position: absolute; right: 12px; top: -8px;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .cat-icon {
+    width: 48px; height: 48px;
+    background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 12px;
+  }
+
+  .cat-icon svg { width: 24px; height: 24px; fill: var(--blue-deep); }
+
+  .cat-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 24px; font-weight: 800;
+    color: var(--white);
+    letter-spacing: 0.5px;
+  }
+
+  .cat-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 2px;
+  }
+
+  .cat-body {
+    padding: 20px 24px;
+  }
+
+  .cat-desc {
+    font-size: 13px;
+    color: #5A6A80;
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  .cat-link {
+    font-size: 13px; font-weight: 700;
+    color: var(--blue);
+    display: flex; align-items: center; gap: 6px;
+    letter-spacing: 0.5px;
+  }
+
+  .cat-link svg { width: 16px; height: 16px; stroke: currentColor; }
+
+  /* ===== RECRUITMENT ===== */
+  .recruit-section {
+    background: var(--blue);
+    position: relative; overflow: hidden;
+  }
+
+  .recruit-section .section-eyebrow { color: rgba(255,255,255,0.6); }
+  .recruit-section .section-title { color: var(--white); }
+  .recruit-section .section-line { background: var(--white); opacity: 0.4; }
+
+  .recruit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: rgba(255,255,255,0.15);
+  }
+
+  .recruit-card {
+    background: var(--blue-dark);
+    padding: 32px;
+    position: relative;
+  }
+
+  .recruit-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .recruit-card:hover::before { transform: scaleX(1); }
+
+  .recruit-tag {
+    background: rgba(212,168,32,0.15);
+    color: var(--accent);
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 2px;
+    padding: 4px 10px;
+    display: inline-block;
+    margin-bottom: 14px;
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+
+  .recruit-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px; font-weight: 900;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+
+  .recruit-age {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 16px;
+  }
+
+  .recruit-info {
+    list-style: none;
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    line-height: 2;
+  }
+
+  .recruit-info li {
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .recruit-info li::before {
+    content: '';
+    width: 4px; height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ===== SCHEDULE ===== */
+  .schedule-section { background: var(--white); }
+
+  .schedule-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .schedule-list { list-style: none; }
+
+  .schedule-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid #EEF2F8;
+  }
+
+  .schedule-day {
+    background: var(--blue);
+    color: var(--white);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 24px;
+    width: 52px; height: 52px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .schedule-day.accent { background: var(--accent); color: var(--blue-deep); }
+
+  .schedule-content {}
+
+  .schedule-event {
+    font-size: 14px; font-weight: 700;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+
+  .schedule-meta {
+    font-size: 12px;
+    color: var(--gray);
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--blue-deep);
+    color: rgba(255,255,255,0.6);
+  }
+
+  .footer-top {
+    padding: 64px 4rem 48px;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 48px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .footer-brand .name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 24px; font-weight: 900;
+    color: var(--white); letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .footer-brand .sub {
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+
+  .footer-brand p {
+    font-size: 13px;
+    line-height: 2;
+    max-width: 280px;
+  }
+
+  .footer-col h4 {
+    font-size: 13px; font-weight: 700;
+    color: var(--white);
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(212,168,32,0.3);
+  }
+
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 8px; }
+  .footer-col a {
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .footer-col a::before {
+    content: '›';
+    color: var(--accent);
+  }
+  .footer-col a:hover { color: var(--accent); }
+
+  .footer-bottom {
+    padding: 20px 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 12px;
+  }
+
+  .footer-bottom a { color: var(--accent); text-decoration: none; }
+
+  /* ===== MORE LINK ===== */
+  .more-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 700;
+    color: var(--blue);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: gap 0.2s;
+  }
+  .more-link:hover { gap: 10px; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    section { padding: 60px 1.5rem; }
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .hero-content { padding: 0 1.5rem; }
+    .about-grid,
+    .schedule-grid,
+    .recruit-grid { grid-template-columns: 1fr; }
+    .news-grid { grid-template-columns: 1fr; }
+    .news-card.featured { grid-row: auto; }
+    .cats-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; gap: 32px; padding: 40px 1.5rem; }
+    .footer-bottom { flex-direction: column; gap: 8px; text-align: center; padding: 20px 1.5rem; }
+    /* 取り組みカード */
+    #initiatives-grid { grid-template-columns: 1fr !important; }
+  }
+
+  /* SNS ICONS */
+  .sns-bar {
+    display: flex; align-items: center; gap: 4px;
+  }
+  .sns-link {
+    display: flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    border-radius: 50%;
+    transition: all 0.2s;
+  }
+  .sns-link:hover { color: var(--white); background: rgba(255,255,255,0.1); }
+  .sns-link.line:hover { color: #06C755; }
+  .sns-link.youtube:hover { color: #FF0000; }
+  .sns-link.instagram:hover { color: #E1306C; }
+
+  /* footer SNS */
+  .footer-sns {
+    display: flex; gap: 8px; margin-top: 16px;
+  }
+  .footer-sns a {
+    display: flex; align-items: center; justify-content: center;
+    width: 38px; height: 38px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    border-radius: 50%;
+    transition: all 0.2s;
+  }
+  .footer-sns a:hover { background: rgba(255,255,255,0.15); color: var(--white); }
+  .footer-sns a.line:hover { border-color: #06C755; color: #06C755; }
+  .footer-sns a.youtube:hover { border-color: #FF0000; color: #FF0000; }
+  .footer-sns a.instagram:hover { border-color: #E1306C; color: #E1306C; }
+
+  .nav-logo .logo-img { height: 36px; width: auto; object-fit: contain; flex-shrink: 0; display: block; }
+  @media (max-width: 480px) { .nav-logo .logo-img { height: 28px; } }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="grande_homepage.html">
+    <img src="emblem.png" class="emblem-img" alt="GRANDE FC エンブレム">
+    <img src="grande.png" class="logo-img" alt="GRANDE FC">
+  </a>
+  <ul class="nav-links">
+    <li><a href="grande_about.html">クラブについて</a></li>
+    <li><a href="grande_players.html">選手・スタッフ</a></li>
+    <li><a href="grande_recruit.html">選手募集</a></li>
+    <li><a href="grande_schedule.html">スケジュール</a></li>
+    <li><a href="grande_match_planner.html">試合結果</a></li>
+    <li><a href="grande_news.html">ニュース</a></li>
+    <li><a href="grande_support.html">パートナー／スポンサー</a></li>
+    <li><a href="grande_contact.html" style="color:var(--accent);">お問い合わせ</a></li>
+  </ul>
+  <div class="sns-bar">
+    <a href="https://line.me/R/ti/p/@200sfwtn" target="_blank" class="sns-link line" title="LINE"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg></a>
+    <a href="https://m.youtube.com/@corazon-grande9642?ra=m" target="_blank" class="sns-link youtube" title="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+    <a href="https://www.instagram.com/yatsugatake.grande/" target="_blank" class="sns-link instagram" title="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a>
+  </div>
+</nav>
+
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-diagonal"></div>
+  <div class="hero-diagonal2"></div>
+  <div class="hero-slash s1"></div>
+  <div class="hero-slash s2"></div>
+  <div class="hero-watermark">GRANDE</div>
+  <canvas id="fieldCanvas"></canvas>
+
+  <div class="hero-content">
+    <div class="hero-tag">SINCE 2001 — HOKUTO CITY, YAMANASHI</div>
+    <h1 class="hero-title">
+      感動する<em class="accent-word">サッカー</em>の追求
+    </h1>
+    <div class="hero-en">Pursuit of Exciting Football</div>
+    <p class="hero-subtitle">
+      八ヶ岳の大自然のもと、子どもたちがフットボールを通じて<br>
+      自分の人生を切り開く力を育てるクラブです。<br>
+      ジュニアユース・ジュニア対象。北杜市で活動中。
+    </p>
+    <div class="hero-ctas">
+      <a href="grande_recruit.html" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+        選手募集中
+      </a>
+      <a href="#about" class="btn-outline">クラブを知る →</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    SCROLL
+  </div>
+</section>
+
+<script>
+// ナビ：ヒーロー上では透明、スクロールで背景色を表示
+(function(){
+  var nav = document.querySelector('nav');
+  if (!nav) return;
+  function onScroll(){
+    if (window.scrollY > 40) { nav.classList.add('nav-solid'); }
+    else { nav.classList.remove('nav-solid'); }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+
+<script>
+(function() {
+  const canvas = document.getElementById('fieldCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  // 解像度をデバイスピクセル比に合わせる
+  const dpr = window.devicePixelRatio || 1;
+  const W = 480, H = 320;
+  canvas.width  = W * dpr;
+  canvas.height = H * dpr;
+  ctx.scale(dpr, dpr);
+
+  // 色
+  const GOLD  = 'rgba(212,168,32,';
+  const WHITE = 'rgba(255,255,255,';
+
+  // 描画する全ラインをパスとして定義
+  // 各パスは { points: [[x,y],...], color, width, dash? }
+  const paths = [];
+
+  // --- ピッチ外枠 ---
+  paths.push({ points: [[10,10],[470,10],[470,310],[10,310],[10,10]], color: GOLD, w: 1.2 });
+
+  // --- センターライン（縦） ---
+  paths.push({ points: [[240,10],[240,310]], color: GOLD, w: 1.0 });
+
+  // --- センターサークル ---
+  paths.push({ type: 'arc', cx: 240, cy: 160, r: 60, color: GOLD, w: 1.0 });
+
+  // --- センタースポット ---
+  paths.push({ type: 'dot', cx: 240, cy: 160, r: 3, color: GOLD });
+
+  // --- 左ペナルティエリア ---
+  paths.push({ points: [[10,95],[80,95],[80,225],[10,225]], color: GOLD, w: 1.0 });
+
+  // --- 右ペナルティエリア ---
+  paths.push({ points: [[470,95],[400,95],[400,225],[470,225]], color: GOLD, w: 1.0 });
+
+  // --- 左ゴールエリア ---
+  paths.push({ points: [[10,130],[36,130],[36,190],[10,190]], color: GOLD, w: 0.8 });
+
+  // --- 右ゴールエリア ---
+  paths.push({ points: [[470,130],[444,130],[444,190],[470,190]], color: GOLD, w: 0.8 });
+
+  // --- 左ペナルティスポット ---
+  paths.push({ type: 'dot', cx: 55, cy: 160, r: 3, color: GOLD });
+
+  // --- 右ペナルティスポット ---
+  paths.push({ type: 'dot', cx: 425, cy: 160, r: 3, color: GOLD });
+
+  // --- 左ペナルティアーク ---
+  paths.push({ type: 'arc', cx: 55, cy: 160, r: 42, startAngle: -0.9, endAngle: 0.9, color: GOLD, w: 0.8 });
+
+  // --- 右ペナルティアーク ---
+  paths.push({ type: 'arc', cx: 425, cy: 160, r: 42, startAngle: Math.PI - 0.9, endAngle: Math.PI + 0.9, color: GOLD, w: 0.8 });
+
+  // --- コーナーアーク（4隅） ---
+  const corners = [
+    { cx: 10,  cy: 10,  s: 0,              e: Math.PI/2 },
+    { cx: 470, cy: 10,  s: Math.PI/2,      e: Math.PI },
+    { cx: 470, cy: 310, s: Math.PI,        e: 3*Math.PI/2 },
+    { cx: 10,  cy: 310, s: 3*Math.PI/2,   e: 2*Math.PI },
+  ];
+  corners.forEach(c => {
+    paths.push({ type: 'arc', cx: c.cx, cy: c.cy, r: 10, startAngle: c.s, endAngle: c.e, color: GOLD, w: 0.8 });
+  });
+
+  // ---- アニメーション管理 ----
+  // 各パスの「描画進捗」0→1
+  const progress = new Array(paths.length).fill(0);
+  const SPEED = 0.028; // 1フレームあたりの進捗増分
+  const DELAY = 6;     // パス間の開始ディレイ（フレーム数）
+  let frame = 0;
+
+  // 円弧の総長を計算（ポリラインは点間距離の合計）
+  function pathLength(p) {
+    if (p.type === 'arc') {
+      const span = p.endAngle !== undefined
+        ? Math.abs(p.endAngle - p.startAngle)
+        : 2 * Math.PI;
+      return p.r * span;
+    }
+    if (p.type === 'dot') return 1;
+    let len = 0;
+    for (let i = 1; i < p.points.length; i++) {
+      const dx = p.points[i][0] - p.points[i-1][0];
+      const dy = p.points[i][1] - p.points[i-1][1];
+      len += Math.sqrt(dx*dx + dy*dy);
+    }
+    return len;
+  }
+
+  function drawPath(p, t) {
+    if (t <= 0) return;
+    const alpha = Math.min(t * 1.5, 0.55);
+    ctx.strokeStyle = p.color + alpha + ')';
+    ctx.fillStyle   = p.color + alpha + ')';
+    ctx.lineWidth   = p.w || 1;
+    ctx.lineCap     = 'round';
+
+    if (p.type === 'dot') {
+      ctx.beginPath();
+      ctx.arc(p.cx, p.cy, p.r, 0, 2 * Math.PI);
+      ctx.fill();
+      return;
+    }
+
+    if (p.type === 'arc') {
+      const fullSpan = p.endAngle !== undefined
+        ? (p.endAngle - p.startAngle)
+        : 2 * Math.PI;
+      const start = p.startAngle !== undefined ? p.startAngle : 0;
+      const end   = start + fullSpan * t;
+      ctx.beginPath();
+      ctx.arc(p.cx, p.cy, p.r, start, end);
+      ctx.stroke();
+      return;
+    }
+
+    // ポリライン: t に応じた途中まで描く
+    const totalLen = pathLength(p);
+    const target   = totalLen * t;
+    let drawn = 0;
+    ctx.beginPath();
+    ctx.moveTo(p.points[0][0], p.points[0][1]);
+    for (let i = 1; i < p.points.length; i++) {
+      const dx = p.points[i][0] - p.points[i-1][0];
+      const dy = p.points[i][1] - p.points[i-1][1];
+      const seg = Math.sqrt(dx*dx + dy*dy);
+      if (drawn + seg >= target) {
+        const ratio = (target - drawn) / seg;
+        ctx.lineTo(
+          p.points[i-1][0] + dx * ratio,
+          p.points[i-1][1] + dy * ratio
+        );
+        break;
+      }
+      ctx.lineTo(p.points[i][0], p.points[i][1]);
+      drawn += seg;
+    }
+    ctx.stroke();
+  }
+
+  // 描画完了後にフェードグロー
+  function drawGlow(p) {
+    if (p.type === 'dot') return;
+    ctx.strokeStyle = p.color + '0.12)';
+    ctx.lineWidth   = (p.w || 1) + 4;
+    ctx.lineCap     = 'round';
+    if (p.type === 'arc') {
+      const span  = p.endAngle !== undefined ? (p.endAngle - p.startAngle) : 2*Math.PI;
+      const start = p.startAngle !== undefined ? p.startAngle : 0;
+      ctx.beginPath();
+      ctx.arc(p.cx, p.cy, p.r, start, start + span);
+      ctx.stroke();
+      return;
+    }
+    ctx.beginPath();
+    ctx.moveTo(p.points[0][0], p.points[0][1]);
+    for (let i = 1; i < p.points.length; i++) ctx.lineTo(p.points[i][0], p.points[i][1]);
+    ctx.stroke();
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, W, H);
+    frame++;
+
+    paths.forEach((p, i) => {
+      const startFrame = i * DELAY;
+      if (frame >= startFrame) {
+        progress[i] = Math.min(progress[i] + SPEED, 1);
+      }
+      if (progress[i] >= 1) drawGlow(p);
+      drawPath(p, progress[i]);
+    });
+
+    const allDone = progress.every(v => v >= 1);
+    if (!allDone) requestAnimationFrame(tick);
+  }
+
+  // ページロード後に少し待ってから開始
+  setTimeout(() => requestAnimationFrame(tick), 300);
+})();
+</script>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-label">RESULT</div>
+  <div class="ticker-track">
+    <div class="ticker-inner" id="tickerInner">
+      <span>試合結果を読み込み中...</span>
+      <span>試合結果を読み込み中...</span>
+    </div>
+  </div>
+</div>
+
+<!-- NEWS -->
+<section class="news-section" id="news">
+  <div class="news-header">
+    <div>
+      <div class="section-eyebrow">LATEST NEWS</div>
+      <h2 class="section-title">最新<em>情報</em></h2>
+      <div class="section-line"></div>
+    </div>
+    <a href="grande_news.html" class="more-link">過去の記事を見る <span>→</span></a>
+  </div>
+
+  <div class="news-grid">
+    <a href="grande_news.html" class="news-card featured">
+      <div class="news-img">GRANDE</div>
+      <div class="news-cat">クラブニュース</div>
+      <div class="news-title">2026年度 ジュニアユース・ジュニア新入団選手募集のお知らせ — 無料体験練習会を随時開催中！お気軽にご参加ください</div>
+      <div class="news-date">2026.06.01</div>
+    </a>
+    <a href="grande_news.html" class="news-card">
+      <div class="news-cat">ジュニアユース</div>
+      <div class="news-title">第〇回山梨県U-15サッカーリーグ — 試合結果速報</div>
+      <div class="news-date">2026.05.28</div>
+    </a>
+    <a href="grande_news.html" class="news-card">
+      <div class="news-cat">イベント</div>
+      <div class="news-title">巡回サッカー教室 北杜市立〇〇小学校にて開催しました</div>
+      <div class="news-date">2026.05.25</div>
+    </a>
+    <a href="grande_news.html" class="news-card">
+      <div class="news-cat">ジュニア</div>
+      <div class="news-title">U-12リーグ第3節 試合レポート掲載</div>
+      <div class="news-date">2026.05.20</div>
+    </a>
+    <a href="grande_news.html" class="news-card">
+      <div class="news-cat">お知らせ</div>
+      <div class="news-title">6月の練習スケジュール・変更のお知らせ（掲示板）</div>
+      <div class="news-date">2026.05.18</div>
+    </a>
+  </div>
+</section>
+
+
+<script>
+// ニュースをJSONBinから読み込み
+(function(){
+  const API_KEY  = '$2a$10$xopawUKPa.2MV76.BGLZtehG8EauPnBwXLLyCgXqw/H5NfvD.yuOq';
+  const NEWS_BIN = '6a26cabada38895dfe9a2ffa';
+
+  async function loadNews() {
+    try {
+      const res = await fetch(`https://api.jsonbin.io/v3/b/${NEWS_BIN}/latest`, {
+        headers: { 'X-Master-Key': API_KEY }
+      });
+      const json = await res.json();
+      // published=false の記事を除外してから日付降順ソート
+      const posts = (json.record.posts || [])
+        .filter(p => p.published !== false)
+        .sort((a,b) => new Date(b.date) - new Date(a.date));
+      if (!posts.length) return;
+
+      const grid = document.querySelector('.news-grid');
+      if (!grid) return;
+
+      const formatDate = str => {
+        if (!str) return '';
+        const d = new Date(str);
+        return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+      };
+
+      // 最新5件を表示
+      const display = posts.slice(0, 5);
+      function convertUrl(url) {
+        if (!url) return null;
+        // /file/d/ 形式（Googleドライブ共有リンク）
+        const m1 = url.match(/\/file\/d\/([^\/\?]+)/);
+        if (m1) return 'https://lh3.googleusercontent.com/d/' + m1[1];
+        // ?id= 形式（旧Googleドライブリンク）★grande_news.htmlと統一
+        const m2 = url.match(/[?&]id=([^&]+)/);
+        if (m2) return 'https://lh3.googleusercontent.com/d/' + m2[1];
+        return url;
+      }
+
+      grid.innerHTML = display.map((p, i) => {
+        const imgUrl = convertUrl(p.image);
+        const imgHtml = imgUrl
+          ? `<div class="news-img" style="background-image:url('${imgUrl}');background-size:cover;background-position:center;"></div>`
+          : `<div class="news-img">GRANDE</div>`;
+        const smallImgHtml = imgUrl
+          ? `<div style="width:100%;aspect-ratio:16/9;background-image:url('${imgUrl}');background-size:contain;background-repeat:no-repeat;background-position:center;background-color:#071A0F;margin-bottom:12px;"></div>`
+          : '';
+        return `<a href="grande_news.html" class="news-card ${i === 0 ? 'featured' : ''}">
+          ${i === 0 ? imgHtml : smallImgHtml}
+          <div class="news-cat">${p.category || 'クラブニュース'}</div>
+          <div class="news-title">${p.title || ''}</div>
+          <div class="news-date">${formatDate(p.date)}</div>
+        </a>`;
+      }).join('');
+
+    } catch(e) {
+      console.log('ニュース読み込みスキップ:', e.message);
+    }
+  }
+
+  loadNews();
+})();
+</script>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-accent"></div>
+  <div class="about-accent2"></div>
+
+  <div class="about-grid">
+    <div class="about-text">
+      <div class="section-eyebrow">CLUB PHILOSOPHY</div>
+      <h2 class="section-title">クラブ<em>理念</em></h2>
+      <div class="section-line"></div>
+      <br><br>
+      <p>
+        <strong>「夢に向かって努力できる子供になって欲しい」</strong><br>
+        その想いで、2001年に北杜市・韮崎市初のクラブチームを創設しました。
+      </p>
+      <p>
+        八ヶ岳の麓、雄大な自然に恵まれた環境の中で、<br>
+        地域に愛されるクラブ、そして子供達が<strong>人間として成長</strong>していけるチーム作りを目指しております。
+      </p>
+      <p>
+        フットボールを通じて、<strong>自分で人生を切り開いていける</strong>、<br>人生を楽しめる大人になって欲しいと願っております。
+      </p>
+      <br>
+      <a href="grande_about.html" class="btn-outline" style="width:fit-content;">クラブ詳細を見る →</a>
+    </div>
+
+    <div>
+      <div class="about-stats">
+        <div class="stat-box">
+          <div class="stat-num">25<span>年</span></div>
+          <div class="stat-label">クラブ創設からの歴史</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">2<span>カテゴリー</span></div>
+          <div class="stat-label">ジュニアユース・ジュニア</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">北杜<span>市</span></div>
+          <div class="stat-label">山梨県を拠点に活動</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">∞</div>
+          <div class="stat-label">子どもたちの可能性</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="cats-section" id="cats">
+  <div class="section-header">
+    <div class="section-eyebrow">CATEGORIES</div>
+    <h2 class="section-title">カテゴリー<em>紹介</em></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="cats-grid">
+    <a href="grande_players.html" class="cat-card">
+      <div class="cat-header">
+        <div class="cat-num">U15</div>
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+        </div>
+        <div class="cat-name">ジュニアユース</div>
+        <div class="cat-sub">中学生 (U-15) 対象</div>
+      </div>
+      <div class="cat-body">
+        <p class="cat-desc">中学生年代のトップカテゴリー。山梨県リーグを中心に全国を目指して活動。個人戦術・チーム戦術を磨き、上のステージへの飛躍を目指します。</p>
+        <div class="cat-link">
+          詳細を見る
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <a href="grande_players.html" class="cat-card">
+      <div class="cat-header">
+        <div class="cat-num">U12</div>
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 100 10A5 5 0 0012 2zm0 12c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z"/></svg>
+        </div>
+        <div class="cat-name">ジュニア</div>
+        <div class="cat-sub">小学生 (U-12) 対象</div>
+      </div>
+      <div class="cat-body">
+        <p class="cat-desc">小学生年代のサッカーの基礎をしっかりと習得。ボールを扱う楽しさ・チームプレーの喜びを体験しながら、サッカーが大好きな選手を育てます。</p>
+        <div class="cat-link">
+          詳細を見る
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <a href="grande_recruit.html" class="cat-card">
+      <div class="cat-header">
+        <div class="cat-num">SC</div>
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+        </div>
+        <div class="cat-name">スクール</div>
+        <div class="cat-sub">未就学〜小学生対象</div>
+      </div>
+      <div class="cat-body">
+        <p class="cat-desc">はじめてサッカーに触れる子どもたちのためのスクール。楽しみながらボールに親しみ、運動の基礎能力も自然に育てます。体験随時受付中！</p>
+        <div class="cat-link">
+          体験申込はこちら
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- RECRUIT -->
+<section class="recruit-section" id="recruit">
+  <div class="section-header">
+    <div class="section-eyebrow">JOIN US</div>
+    <h2 class="section-title" style="color:white;">選手<em style="color:var(--accent)">募集</em></h2>
+    <div class="section-line" style="background:var(--accent);"></div>
+  </div>
+
+  <div class="recruit-grid">
+    <div class="recruit-card">
+      <div class="recruit-tag">JUNIOR YOUTH</div>
+      <div class="recruit-name">ジュニアユース 募集</div>
+      <div class="recruit-age">中学1〜3年生（U-15）対象</div>
+      <ul class="recruit-info">
+        <li>活動日：月・水・木・土・日</li>
+        <li>食育プロジェクト：「グランデ食堂」を毎週月曜日に実施</li>
+        <li>活動場所：白州総合運動場・長坂総合スポーツ公園 ほか</li>
+        <li>在籍地域：山梨県北杜市・韮崎市・南アルプス市、長野県富士見町・原村・茅野市・川上村 ほか</li>
+      </ul>
+      <br>
+      <a href="grande_recruit.html" class="btn-primary" style="margin-top:8px;">練習会に参加する</a>
+    </div>
+
+    <div class="recruit-card">
+      <div class="recruit-tag">JUNIOR</div>
+      <div class="recruit-name">ジュニア 募集</div>
+      <div class="recruit-age">小学1〜6年生（U-12）対象</div>
+      <ul class="recruit-info">
+        <li>活動日：月・水・（木）・土・日</li>
+        <li>※水曜日は高学年のみ活動</li>
+        <li>活動場所：白州総合運動場・長坂総合スポーツ公園 ほか</li>
+        <li>体験練習：随時受付中</li>
+        <li>未経験者・初心者も大歓迎！</li>
+      </ul>
+      <br>
+      <a href="grande_recruit.html" class="btn-primary" style="margin-top:8px;">体験練習会に申込む</a>
+    </div>
+
+  </div>
+
+  <br><br>
+  <div style="text-align:center;">
+    <a href="grande_contact.html" style="color:rgba(255,255,255,0.6); font-size:13px; text-decoration:none; border-bottom:1px solid rgba(255,255,255,0.3); padding-bottom:2px;">お問い合わせ・詳細はこちら →</a>
+  </div>
+</section>
+
+<!-- INITIATIVES -->
+<section style="padding:80px 4rem; background:var(--off-white);">
+  <div class="section-header">
+    <div class="section-eyebrow">CLUB INITIATIVES</div>
+    <h2 class="section-title">クラブの<em>取り組み</em></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div id="initiatives-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+
+    <!-- 湯RANDE -->
+    <a href="grande_yurande.html" style="text-decoration:none; color:inherit; display:block; background:var(--white); border:1px solid #DDE4EF; overflow:hidden; transition:all 0.25s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 40px rgba(26,107,60,0.15)';this.style.borderColor='var(--blue)'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='#DDE4EF'">
+      <div style="background:linear-gradient(135deg, #0F4526 0%, #1A6B3C 100%); padding:32px 28px 24px; position:relative; overflow:hidden;">
+        <div style="position:absolute; right:16px; top:50%; transform:translateY(-50%); font-size:72px; opacity:0.12; line-height:1;">♨</div>
+        <div style="font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:3px; color:var(--accent); margin-bottom:8px;">GRANDE × 温泉</div>
+        <div style="font-family:'Barlow Condensed',sans-serif; font-size:32px; font-weight:900; color:var(--white); letter-spacing:1px; line-height:1;">湯RANDE</div>
+        <div style="height:3px; width:40px; background:var(--accent); margin-top:10px;"></div>
+      </div>
+      <div style="padding:20px 28px 24px;">
+        <p style="font-size:14px; line-height:1.9; color:#5A6A80; margin-bottom:16px;">練習・試合のあとに、<strong style="color:var(--text);">グランデ関係者なら誰でも200円</strong>で北杜市「べるが」内の温泉「尾白の湯」に入れる特別企画。選手・保護者・OBみんなが対象です。</p>
+        <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
+          <span style="background:#E8F5EE; color:var(--blue-dark); font-size:12px; font-weight:700; padding:4px 10px; border-radius:2px;">通常830円→200円</span>
+          <span style="background:#FDF6E3; color:#7A5A00; font-size:12px; font-weight:700; padding:4px 10px; border-radius:2px;">2026.4〜2027.3</span>
+        </div>
+        <div style="font-size:13px; font-weight:700; color:var(--blue); display:flex; align-items:center; gap:6px;">クーポンはLINEから →</div>
+      </div>
+    </a>
+
+    <!-- グランデ食堂 -->
+    <a href="grande_shokudo.html" style="text-decoration:none; color:inherit; display:block; background:var(--white); border:1px solid #DDE4EF; overflow:hidden; transition:all 0.25s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 40px rgba(26,107,60,0.15)';this.style.borderColor='var(--blue)'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='#DDE4EF'">
+      <div style="background:linear-gradient(135deg, #2A1800 0%, #7A5A00 100%); padding:32px 28px 24px; position:relative; overflow:hidden;">
+        <div style="position:absolute; right:16px; top:50%; transform:translateY(-50%); font-size:72px; opacity:0.12; line-height:1;">🍚</div>
+        <div style="font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:3px; color:var(--accent); margin-bottom:8px;">食育 × フットボール</div>
+        <div style="font-family:'Barlow Condensed',sans-serif; font-size:32px; font-weight:900; color:var(--white); letter-spacing:1px; line-height:1;">グランデ食堂</div>
+        <div style="height:3px; width:40px; background:var(--accent); margin-top:10px;"></div>
+      </div>
+      <div style="padding:20px 28px 24px;">
+        <p style="font-size:14px; line-height:1.9; color:#5A6A80; margin-bottom:16px;"><strong style="color:var(--text);">白州米・地元野菜・栄養士監修</strong>の食事で選手の心と体を育てる取り組み。化学調味料不使用、ごはん・汁物おかわり自由。毎月のBMI測定で体と向き合う習慣も。</p>
+        <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
+          <span style="background:#E8F5EE; color:var(--blue-dark); font-size:12px; font-weight:700; padding:4px 10px; border-radius:2px;">栄養士監修</span>
+          <span style="background:#FDF6E3; color:#7A5A00; font-size:12px; font-weight:700; padding:4px 10px; border-radius:2px;">地産地消</span>
+          <span style="background:#FBEAF0; color:#72243E; font-size:12px; font-weight:700; padding:4px 10px; border-radius:2px;">食育</span>
+        </div>
+        <div style="font-size:13px; font-weight:700; color:var(--blue); display:flex; align-items:center; gap:6px;">詳細を見る →</div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section style="padding:80px 4rem; background:var(--green-deep);" id="results">
+  <div class="section-header">
+    <div class="section-eyebrow" style="color:var(--accent);">LATEST RESULTS</div>
+    <h2 class="section-title" style="color:var(--white);">最新<em>試合結果</em></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div id="homeResultList" style="display:flex; flex-direction:column; gap:10px; margin-bottom:28px;">
+    <!-- JS で挿入 -->
+    <div style="text-align:center; color:rgba(255,255,255,0.3); font-size:13px; padding:20px;">読み込み中...</div>
+  </div>
+
+  <div style="text-align:center;">
+    <a href="grande_match_planner.html" style="display:inline-flex; align-items:center; gap:8px; background:var(--accent); color:var(--green-deep); padding:13px 28px; font-size:14px; font-weight:900; font-family:'Noto Sans JP',sans-serif; text-decoration:none; transition:all 0.2s; clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%);">
+      全試合結果を見る →
+    </a>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section class="schedule-section" id="schedule">
+  <div class="section-header">
+    <div class="section-eyebrow">SCHEDULE</div>
+    <h2 class="section-title">活動<em>スケジュール</em></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="schedule-grid">
+    <div>
+      <h3 style="font-size:14px; font-weight:700; letter-spacing:2px; color:var(--blue); margin-bottom:16px; font-family:'Barlow Condensed',sans-serif;">JUNIOR YOUTH — ジュニアユース</h3>
+      <ul class="schedule-list">
+        <li>
+          <div class="schedule-day">月</div>
+          <div class="schedule-content">
+            <div class="schedule-event">通常練習</div>
+            <div class="schedule-meta">18:30〜20:30 ／ 白州総合運動場</div>
+          </div>
+        </li>
+        <li>
+          <div class="schedule-day">水</div>
+          <div class="schedule-content">
+            <div class="schedule-event">通常練習</div>
+            <div class="schedule-meta">18:30〜20:30 ／ 白州総合運動場</div>
+          </div>
+        </li>
+        <li>
+          <div class="schedule-day">木</div>
+          <div class="schedule-content">
+            <div class="schedule-event">通常練習</div>
+            <div class="schedule-meta">18:30〜20:30 ／ 長坂総合スポーツ公園</div>
+          </div>
+        </li>
+        <li>
+          <div class="schedule-day accent">土・日</div>
+          <div class="schedule-content">
+            <div class="schedule-event">練習 or 試合</div>
+            <div class="schedule-meta">会場はLINEにてご確認ください</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <h3 style="font-size:14px; font-weight:700; letter-spacing:2px; color:var(--blue); margin-bottom:16px; font-family:'Barlow Condensed',sans-serif;">JUNIOR — ジュニア / スクール</h3>
+      <ul class="schedule-list">
+        <li>
+          <div class="schedule-day">月</div>
+          <div class="schedule-content">
+            <div class="schedule-event">通常練習（4〜6年）</div>
+            <div class="schedule-meta">18:00〜20:00 ／ 白州総合運動場</div>
+          </div>
+        </li>
+        <li>
+          <div class="schedule-day">木</div>
+          <div class="schedule-content">
+            <div class="schedule-event">通常練習 / スクール</div>
+            <div class="schedule-meta">18:00〜20:00（SC 17:00〜18:00） ／ 長坂総合スポーツ公園</div>
+          </div>
+        </li>
+        <li>
+          <div class="schedule-day accent">土・日</div>
+          <div class="schedule-content">
+            <div class="schedule-event">練習 or 試合</div>
+            <div class="schedule-meta">会場はLINEにてご確認ください</div>
+          </div>
+        </li>
+      </ul>
+      <br>
+      <a href="grande_schedule.html" class="more-link">詳細スケジュールを確認する →</a>
+    </div>
+  </div>
+</section>
+
+
+<script>
+(function(){
+  // ★ Match Planner と同じ BIN ID・API KEY
+  const BIN_ID  = '6a241ce5f5f4af5e29c25c0e';
+  const API_KEY = '$2a$10$xopawUKPa.2MV76.BGLZtehG8EauPnBwXLLyCgXqw/H5NfvD.yuOq';
+
+  function fmtDate(str) {
+    if (!str) return '';
+    const d = new Date(str);
+    if (isNaN(d)) return str;
+    return (d.getMonth()+1) + '/' + d.getDate();
+  }
+
+  // Match Planner の resultStr に合わせる（'勝利'/'敗戦'/'引き分け'）
+  function resultLabel(str) {
+    if (str === '勝利') return '<span style="background:#1A6B3C;color:#fff;font-size:11px;font-weight:700;padding:2px 8px;font-family:\'Barlow Condensed\',sans-serif;">勝</span>';
+    if (str === '引き分け') return '<span style="background:#8A7000;color:#fff;font-size:11px;font-weight:700;padding:2px 8px;font-family:\'Barlow Condensed\',sans-serif;">分</span>';
+    if (str === '敗戦') return '<span style="background:#A32020;color:#fff;font-size:11px;font-weight:700;padding:2px 8px;font-family:\'Barlow Condensed\',sans-serif;">負</span>';
+    return '';
+  }
+
+  function resultMark(str) {
+    if (str === '勝利') return '勝';
+    if (str === '引き分け') return '分';
+    if (str === '敗戦') return '負';
+    return '-';
+  }
+
+  fetch('https://api.jsonbin.io/v3/b/' + BIN_ID + '/latest', {
+    headers: { 'X-Master-Key': API_KEY }
+  })
+  .then(r => r.json())
+  .then(json => {
+    // Match Planner は { players:[...], matches:[...] } で保存
+    const matches = (json.record && Array.isArray(json.record.matches))
+      ? json.record.matches
+      : [];
+
+    const listEl  = document.getElementById('homeResultList');
+    const ticker  = document.getElementById('tickerInner');
+
+    // スコアが登録済みのものだけ対象（result が存在し myScore が定義されているもの）
+    const scored = matches.filter(m => m.result && m.result.myScore !== undefined);
+
+    // ① データなし
+    if (!scored.length) {
+      if (listEl) listEl.innerHTML = '<div style="text-align:center;color:rgba(255,255,255,0.4);font-size:13px;padding:20px;">試合結果はありません</div>';
+      if (ticker) ticker.innerHTML = '<span>試合結果はありません</span><span>試合結果はありません</span>';
+      return;
+    }
+
+    // 新しい順・最新5件
+    const display = scored.slice().sort((a,b) => new Date(b.date||0) - new Date(a.date||0)).slice(0,5);
+
+    // ② 試合結果セクション
+    if (listEl) {
+      listEl.innerHTML = display.map(m => {
+        const r   = m.result || {};
+        const my  = r.myScore  !== undefined ? r.myScore  : '-';
+        const opp = r.oppScore !== undefined ? r.oppScore : '-';
+        const res = r.resultStr || '';
+        return `<div style="background:rgba(0,0,0,0.35);border:1px solid rgba(212,168,32,0.3);padding:14px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+          <span style="font-size:12px;color:rgba(255,255,255,0.85);min-width:40px;font-weight:700;">${fmtDate(m.date)}</span>
+          <span style="font-size:12px;color:var(--accent);font-family:'Barlow Condensed',sans-serif;font-weight:700;min-width:80px;">${m.competitionName||m.type||''}</span>
+          <span style="font-size:14px;font-weight:700;color:#fff;">グランデFC</span>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:#fff;line-height:1;">${my} <span style="color:rgba(255,255,255,0.75);font-size:20px;">-</span> ${opp}</span>
+          <span style="font-size:14px;color:rgba(255,255,255,0.9);font-weight:500;">vs ${m.opponent||'相手チーム'}</span>
+          <span style="margin-left:auto;">${resultLabel(res)}</span>
+        </div>`;
+      }).join('');
+    }
+
+    // ③ ティッカー
+    if (ticker) {
+      const items = display.map(m => {
+        const r   = m.result || {};
+        const my  = r.myScore  !== undefined ? r.myScore  : '-';
+        const opp = r.oppScore !== undefined ? r.oppScore : '-';
+        const mark = resultMark(r.resultStr || '');
+        return `<span>[${mark}] ${fmtDate(m.date)} ${m.competitionName||m.type||''} vs ${m.opponent||'?'} ${my}-${opp}</span>`;
+      });
+      ticker.innerHTML = [...items, ...items].join('');
+      ticker.style.animationDuration = (items.length * 8) + 's';
+    }
+  })
+  .catch(() => {
+    const listEl = document.getElementById('homeResultList');
+    if (listEl) listEl.innerHTML = '<div style="text-align:center;color:rgba(255,255,255,0.4);font-size:13px;padding:20px;">試合結果を取得できませんでした</div>';
+    const ticker = document.getElementById('tickerInner');
+    if (ticker) ticker.innerHTML = '<span>試合結果を取得できませんでした</span><span>試合結果を取得できませんでした</span>';
+  });
+})();
+</script>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="name">GRANDE FC</div>
+      <div class="sub">八ヶ岳グランデフットボールクラブ</div>
+      <p>山梨県北杜市を拠点に活動するジュニアユース・ジュニア対象のサッカークラブです。2001年創設。夢に向かって努力できる子供を育てます。</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>クラブ</h4>
+      <ul>
+        <li><a href="grande_about.html">クラブ理念</a></li>
+        <li><a href="grande_about.html">エンブレム・ロゴ</a></li>
+        <li><a href="grande_about.html">クラブ概要</a></li>
+        <li><a href="grande_about.html">沿革</a></li>
+        <li><a href="grande_players.html">スタッフ</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>カテゴリー</h4>
+      <ul>
+        <li><a href="grande_players.html">ジュニアユース</a></li>
+        <li><a href="grande_players.html">ジュニア</a></li>
+        <li><a href="grande_recruit.html">スクール</a></li>
+        <li><a href="grande_news.html">巡回サッカー教室</a></li>
+        <li><a href="grande_about.html">育成指針</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>参加・お問合せ</h4>
+      <ul>
+        <li><a href="grande_recruit.html">選手募集</a></li>
+        <li><a href="grande_recruit.html">練習会申込</a></li>
+        <li><a href="grande_contact.html">お問い合わせ</a></li>
+        <li><a href="grande_match_planner.html">試合結果</a></li>
+        <li><a href="grande_news.html">クラブニュース</a></li>
+        <li><a href="https://www.youtube.com/channel/UCmnUnCiMTVW6kd9gCPXdNAg" target="_blank">YouTube</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 Yatsugatake Grande Football Club. All Rights Reserved.</span>
+    <span>山梨県北杜市 ／ <a href="#">プライバシーポリシー</a></span>
+  </div>
+</footer>
+
+
+<!-- ============================================================
+  GRANDE DESIGN v2 — 追記のみ。既存コードは無変更。
+  ① ヒーロー動画オーバーレイ強化
+  ② 手書きSVGアニメ（クラブ理念セクション）
+  ③ スクロールフェードイン（IntersectionObserver）
+  ④ 斜めカット・六角形・タイポ強化（CSSのみ）
+============================================================ -->
+
+<style>
+/* ================================================================
+   ① ヒーロー強化
+   ================================================================ */
+
+/* 動画レイヤー（ヒーロー背景に重ねる） */
+.grande-hero-video-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+.grande-hero-video-wrap video {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.32;
+  filter: saturate(0.6) brightness(0.7);
+}
+.grande-hero-video-wrap img.fallback {
+  display: none;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.28;
+}
+
+/* 斜めグラデーションオーバーレイ追加 */
+.hero::after {
+  content: '';
+  position: absolute; inset: 0; z-index: 1;
+  background:
+    linear-gradient(135deg,
+      rgba(7,26,15,0.88) 0%,
+      rgba(7,26,15,0.55) 50%,
+      rgba(15,69,38,0.30) 100%);
+  pointer-events: none;
+}
+
+/* ヒーローのcontentを前面に */
+.hero-content { position: relative; z-index: 2; }
+.hero-scroll, .hero-diagonal, .hero-diagonal2, #fieldCanvas { z-index: 2; }
+
+/* ヒーロータイトル強化（1行表示） */
+.hero-title {
+  font-size: clamp(30px, 6.4vw, 86px) !important;
+  letter-spacing: 0.02em !important;
+  line-height: 1.05 !important;
+  font-weight: 900 !important;
+  white-space: nowrap !important;
+}
+
+/* タグ強化 */
+.hero-tag {
+  font-size: 11px !important;
+  letter-spacing: 4px !important;
+  opacity: 0.9 !important;
+  margin-bottom: 20px !important;
+}
+
+/* CTAボタン強化 */
+.hero-ctas { margin-top: 36px !important; gap: 16px !important; }
+.btn-primary {
+  font-size: 14px !important;
+  padding: 14px 32px !important;
+  letter-spacing: 1.5px !important;
+}
+
+/* ================================================================
+   ② 手書きSVGアニメ（クラブ理念セクション上部）
+   ================================================================ */
+.grande-handwrite-wrap {
+  margin-bottom: 28px;
+  overflow: hidden;
+}
+.grande-handwrite-wrap svg {
+  width: min(520px, 90vw);
+  height: auto;
+  display: block;
+}
+/* パスのストロークアニメ */
+.hw-path {
+  fill: none;
+  stroke: var(--accent, #D4A820);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: var(--dash, 1000);
+  stroke-dashoffset: var(--dash, 1000);
+  transition: stroke-dashoffset 0s;
+}
+.hw-path.animate {
+  animation: hw-draw 1.6s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+.hw-path:nth-child(1)  { animation-delay: 0s; }
+.hw-path:nth-child(2)  { animation-delay: 0.12s; }
+.hw-path:nth-child(3)  { animation-delay: 0.24s; }
+.hw-path:nth-child(4)  { animation-delay: 0.36s; }
+.hw-path:nth-child(5)  { animation-delay: 0.48s; }
+.hw-path:nth-child(6)  { animation-delay: 0.60s; }
+.hw-path:nth-child(7)  { animation-delay: 0.72s; }
+.hw-path:nth-child(8)  { animation-delay: 0.84s; }
+.hw-path:nth-child(9)  { animation-delay: 0.96s; }
+.hw-path:nth-child(10) { animation-delay: 1.08s; }
+.hw-path:nth-child(11) { animation-delay: 1.20s; }
+.hw-path:nth-child(12) { animation-delay: 1.32s; }
+@keyframes hw-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ================================================================
+   ③ スクロールフェードイン
+   ================================================================ */
+.g-fade    { opacity: 0; transform: translateY(30px);   transition: opacity 0.7s ease, transform 0.7s ease; }
+.g-slide-l { opacity: 0; transform: translateX(-40px);  transition: opacity 0.7s ease, transform 0.7s ease; }
+.g-slide-r { opacity: 0; transform: translateX(40px);   transition: opacity 0.7s ease, transform 0.7s ease; }
+.g-zoom    { opacity: 0; transform: scale(0.94);         transition: opacity 0.7s ease, transform 0.7s ease; }
+.g-fade.g-visible, .g-slide-l.g-visible, .g-slide-r.g-visible, .g-zoom.g-visible {
+  opacity: 1; transform: none;
+}
+/* 遅延クラス */
+.g-d1 { transition-delay: 0.1s; }
+.g-d2 { transition-delay: 0.2s; }
+.g-d3 { transition-delay: 0.3s; }
+.g-d4 { transition-delay: 0.4s; }
+.g-d5 { transition-delay: 0.5s; }
+
+/* ================================================================
+   ④ 斜めカット・六角形・デザイン強化
+   ================================================================ */
+
+/* セクション区切りに斜めカット */
+.news-section {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 32px), 0 100%);
+  padding-bottom: 80px !important;
+}
+.about-section {
+  clip-path: polygon(0 32px, 100% 0, 100% 100%, 0 100%);
+}
+.recruit-section {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 32px), 0 100%);
+}
+
+/* カテゴリーカード：六角形アクセント */
+.cat-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+}
+.cat-card::before {
+  content: '';
+  position: absolute;
+  top: -20px; right: -20px;
+  width: 80px; height: 80px;
+  background: rgba(212,168,32,0.08);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  transition: transform 0.4s ease;
+}
+.cat-card:hover::before { transform: scale(1.6) rotate(15deg); }
+.cat-card:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: 0 20px 48px rgba(26,107,60,0.2) !important;
+}
+
+/* ニュースカード強化 */
+.news-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+}
+.news-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 16px 40px rgba(26,107,60,0.18) !important;
+}
+
+/* セクション見出し強化 */
+.section-eyebrow {
+  font-size: 11px !important;
+  letter-spacing: 5px !important;
+}
+.section-title {
+  font-size: clamp(32px, 5vw, 52px) !important;
+}
+
+/* about-section の数字を大きく */
+.stat-num {
+  font-size: clamp(40px, 6vw, 64px) !important;
+}
+
+/* 三角形パターン背景（cats-section） */
+.cats-section {
+  position: relative;
+}
+.cats-section::before {
+  content: '';
+  position: absolute;
+  inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    linear-gradient(60deg, rgba(212,168,32,0.04) 25%, transparent 25%),
+    linear-gradient(-60deg, rgba(212,168,32,0.04) 25%, transparent 25%),
+    linear-gradient(60deg, transparent 75%, rgba(212,168,32,0.04) 75%),
+    linear-gradient(-60deg, transparent 75%, rgba(212,168,32,0.04) 75%);
+  background-size: 40px 40px;
+}
+.cats-section > * { position: relative; z-index: 1; }
+
+/* 六角形デコレーション（recruit-section） */
+.recruit-section {
+  position: relative;
+  overflow: hidden;
+}
+.recruit-section::before {
+  content: '';
+  position: absolute;
+  right: -60px; top: 40px;
+  width: 280px; height: 280px;
+  opacity: 0.06;
+  background: var(--accent, #D4A820);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  pointer-events: none;
+}
+
+/* スクロールインジケーター強化 */
+.hero-scroll {
+  animation: grande-bob 2s ease-in-out infinite;
+}
+@keyframes grande-bob {
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(8px); }
+}
+
+/* ナビのアクティブ境界線 */
+nav .nav-links a.active,
+nav .nav-links a:hover {
+  border-bottom-color: var(--accent, #D4A820) !important;
+}
+
+/* スマホ調整 */
+@media (max-width: 600px) {
+  .hero-title { font-size: clamp(26px, 7.6vw, 40px) !important; }
+  .news-section { clip-path: none; }
+  .recruit-section { clip-path: none; }
+  .about-section { clip-path: none; }
+}
+</style>
+
+<!-- ① ヒーロー動画オーバーレイ挿入スクリプト（DOM操作で追記） -->
+<script>
+(function(){
+  'use strict';
+  var hero = document.querySelector('.hero');
+  if (!hero) return;
+
+  // 動画ラッパーを作成してヒーローの先頭に挿入
+  var wrap = document.createElement('div');
+  wrap.className = 'grande-hero-video-wrap';
+
+  var video = document.createElement('video');
+  video.setAttribute('autoplay','');
+  video.setAttribute('muted','');
+  video.setAttribute('loop','');
+  video.setAttribute('playsinline','');
+  // ★ 動画ファイルを用意したらここに実際のパスを入力
+  // 例: video.src = 'assets/hero.mp4';
+  // 現在は空のためfallback画像が表示される
+  video.src = '';
+
+  // fallback: 動画が読めない場合は静止画
+  var fallback = document.createElement('img');
+  fallback.className = 'fallback';
+  // 実際の画像パスを設定: fallback.src = 'assets/hero_fallback.jpg';
+  fallback.alt = '';
+
+  video.addEventListener('error', function(){
+    video.style.display = 'none';
+    fallback.style.display = 'block';
+  });
+
+  // src空の場合もfallback扱い
+  if (!video.src || video.src === window.location.href) {
+    video.style.display = 'none';
+    // fallback.style.display = 'block'; // 画像パスを設定した場合はこちらを有効化
+  }
+
+  wrap.appendChild(video);
+  wrap.appendChild(fallback);
+  hero.insertBefore(wrap, hero.firstChild);
+})();
+</script>
+
+<!-- ② 手書きSVGアニメをクラブ理念セクションに挿入 -->
+<script>
+(function(){
+  'use strict';
+  // about-section 内のテキストコンテナを探す
+  var aboutSec = document.getElementById('about');
+  if (!aboutSec) return;
+  var textDiv = aboutSec.querySelector('.about-text');
+  if (!textDiv) {
+    // フォールバック: section直下の最初のdiv
+    textDiv = aboutSec.querySelector('div');
+  }
+  if (!textDiv) return;
+
+  // 手書きSVG（"GRANDE FOOTBALL CLUB" をペン描き風に）
+  var wrap = document.createElement('div');
+  wrap.className = 'grande-handwrite-wrap';
+  wrap.innerHTML = `
+<svg viewBox="0 0 520 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <!-- G -->
+  <path class="hw-path" style="--dash:120" d="M18 12 C8 12 2 18 2 26 C2 34 8 40 18 40 C24 40 28 37 30 34 L30 26 L20 26"/>
+  <!-- R -->
+  <path class="hw-path" style="--dash:100" d="M36 12 L36 40 M36 12 C44 12 50 14 50 20 C50 26 44 26 36 26 M44 26 L52 40"/>
+  <!-- A -->
+  <path class="hw-path" style="--dash:110" d="M58 40 L68 12 L78 40 M61 30 L75 30"/>
+  <!-- N -->
+  <path class="hw-path" style="--dash:110" d="M84 40 L84 12 L100 40 L100 12"/>
+  <!-- D -->
+  <path class="hw-path" style="--dash:120" d="M106 12 L106 40 C118 40 126 34 126 26 C126 18 118 12 106 12"/>
+  <!-- E -->
+  <path class="hw-path" style="--dash:110" d="M132 12 L148 12 M132 12 L132 40 L148 40 M132 26 L144 26"/>
+  <!-- space + F -->
+  <path class="hw-path" style="--dash:90"  d="M158 12 L174 12 M158 12 L158 40 M158 26 L170 26"/>
+  <!-- C -->
+  <path class="hw-path" style="--dash:120" d="M200 14 C192 14 184 19 184 26 C184 33 192 40 200 40"/>
+  <!-- underscore accent line -->
+  <path class="hw-path" style="--dash:300" d="M2 46 C80 44 200 44 340 46" stroke-width="1" opacity="0.5"/>
+</svg>`;
+
+  textDiv.insertBefore(wrap, textDiv.firstChild);
+
+  // IntersectionObserver で表示時にアニメ開始
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) {
+        wrap.querySelectorAll('.hw-path').forEach(function(p){
+          p.classList.add('animate');
+        });
+        io.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+  io.observe(wrap);
+})();
+</script>
+
+<!-- ③ スクロールフェードイン（IntersectionObserver） -->
+<script>
+(function(){
+  'use strict';
+
+  // アニメ対象セレクタとクラスを定義
+  var rules = [
+    { sel: '.news-card',      cls: 'g-fade',    delay: true },
+    { sel: '.cat-card',       cls: 'g-zoom',    delay: true },
+    { sel: '.recruit-card',   cls: 'g-slide-l', delay: true },
+    { sel: '.stat-box',       cls: 'g-zoom',    delay: true },
+    { sel: '.section-title',  cls: 'g-fade',    delay: false },
+    { sel: '.section-eyebrow',cls: 'g-fade',    delay: false },
+    { sel: '.about-text p',   cls: 'g-slide-l', delay: true },
+    { sel: '.schedule-day',   cls: 'g-fade',    delay: true },
+    { sel: '.footer-col',     cls: 'g-fade',    delay: true },
+    { sel: '#initiatives-grid > *', cls: 'g-zoom', delay: true },
+  ];
+
+  var delays = ['g-d1','g-d2','g-d3','g-d4','g-d5'];
+
+  rules.forEach(function(rule){
+    document.querySelectorAll(rule.sel).forEach(function(el, i){
+      // 既にアニメ済みでない場合のみ付与
+      if (el.classList.contains('g-fade') ||
+          el.classList.contains('g-slide-l') ||
+          el.classList.contains('g-slide-r') ||
+          el.classList.contains('g-zoom')) return;
+      el.classList.add(rule.cls);
+      if (rule.delay) el.classList.add(delays[i % 5]);
+    });
+  });
+
+  // Observer
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) {
+        e.target.classList.add('g-visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll(
+    '.g-fade, .g-slide-l, .g-slide-r, .g-zoom'
+  ).forEach(function(el){ io.observe(el); });
+
+})();
+</script>
+<!-- / GRANDE DESIGN v2 -->
+
+
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>試合結果│八ヶ岳グランデフットボールクラブ</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,800;0,900;1,900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  :root {
+    --green:#1A6B3C; --green-dark:#0F4526; --green-deep:#071A0F;
+    --gold:#D4A820; --white:#FFFFFF; --off-white:#F4F7FB;
+    --gray:#8A9BB0; --text:#0D1B2A; --border:#DDE4EF;
+    --win:#1A6B3C; --draw:#8A7000; --lose:#A32020;
+  }
+  body { font-family:'Noto Sans JP',sans-serif; background:var(--off-white); color:var(--text); }
+
+  /* NAV */
+  nav { background:var(--green-deep); display:flex; align-items:center; justify-content:space-between; padding:0 2rem; height:64px; border-bottom:2px solid var(--gold); position:sticky; top:0; z-index:100; }
+  .nav-logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+  .nav-logo .emblem-img { width:44px; height:44px; object-fit:contain; flex-shrink:0; }
+  .nav-logo .name { font-family:'Barlow Condensed',sans-serif; font-size:17px; font-weight:800; color:var(--white); letter-spacing:1px; line-height:1.1; }
+  .nav-logo .name span { display:block; font-size:10px; font-weight:400; color:var(--gold); letter-spacing:1.5px; font-family:'Noto Sans JP',sans-serif; white-space:nowrap; }
+  .nav-links { display:flex; gap:0; list-style:none; }
+  .nav-links a { color:rgba(255,255,255,0.75); text-decoration:none; font-size:13px; font-weight:500; padding:0 14px; height:64px; display:flex; align-items:center; border-bottom:3px solid transparent; transition:all 0.2s; }
+  .nav-links a:hover { color:var(--white); border-bottom-color:var(--gold); }
+  .nav-links a.active { color:var(--gold); border-bottom-color:var(--gold); }
+  @media(max-width:768px){ .nav-links{display:none;} nav{padding:0 1.25rem;} .nav-logo .name span{display:none;} }
+
+  /* PAGE HEADER */
+  .page-header { background:var(--green-dark); padding:48px 3rem 40px; position:relative; overflow:hidden; }
+  .page-header::after { content:'RESULTS'; position:absolute; right:2rem; top:50%; transform:translateY(-50%); font-family:'Barlow Condensed',sans-serif; font-size:90px; font-weight:900; font-style:italic; color:rgba(255,255,255,0.04); pointer-events:none; line-height:1; }
+  .eyebrow { font-family:'Barlow Condensed',sans-serif; font-size:12px; font-weight:700; letter-spacing:4px; color:var(--gold); margin-bottom:8px; }
+  .page-header h1 { font-family:'Barlow Condensed',sans-serif; font-size:48px; font-weight:900; color:var(--white); line-height:1; }
+  .page-header h1 em { color:var(--gold); font-style:normal; }
+  .header-line { width:40px; height:3px; background:var(--gold); margin-top:12px; }
+
+  /* WRAP */
+  .wrap { max-width:900px; margin:0 auto; padding:48px 2rem; }
+  @media(max-width:768px){ .wrap{padding:32px 1.25rem;} }
+
+  /* STATS BAR */
+  .stats-bar { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; background:var(--border); margin-bottom:32px; }
+  .stat-box { background:var(--white); padding:16px; text-align:center; }
+  .stat-num { font-family:'Barlow Condensed',sans-serif; font-size:36px; font-weight:900; line-height:1; color:var(--text); }
+  .stat-num.win { color:var(--win); }
+  .stat-num.draw { color:var(--draw); }
+  .stat-num.lose { color:var(--lose); }
+  .stat-label { font-size:11px; color:var(--gray); margin-top:3px; letter-spacing:1px; font-family:'Barlow Condensed',sans-serif; font-weight:700; }
+
+  /* FILTER */
+  .filter-bar { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px; }
+  .filter-btn { padding:7px 16px; border:1px solid var(--border); background:var(--white); font-size:12px; font-weight:700; letter-spacing:1px; color:var(--gray); font-family:'Barlow Condensed',sans-serif; cursor:pointer; transition:all 0.2s; }
+  .filter-btn:hover { border-color:var(--green); color:var(--green); }
+  .filter-btn.active { background:var(--green); border-color:var(--green); color:var(--white); }
+
+  /* MATCH CARD */
+  .match-list { display:flex; flex-direction:column; gap:12px; }
+
+  .match-card { background:var(--white); border:1px solid var(--border); overflow:hidden; transition:all 0.2s; }
+  .match-card:hover { border-color:var(--green); box-shadow:0 4px 16px rgba(26,107,60,0.1); }
+
+  .match-top { padding:12px 20px 0; display:flex; align-items:center; justify-content:space-between; }
+  .match-meta { display:flex; align-items:center; gap:10px; }
+  .match-date { font-size:12px; color:var(--gray); }
+  .match-tourney { font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:700; color:var(--green); letter-spacing:0.5px; }
+  .match-type-badge { font-size:10px; font-weight:700; letter-spacing:1px; padding:2px 8px; font-family:'Barlow Condensed',sans-serif; }
+  .type-official { background:#E8F5EE; color:var(--green-dark); }
+  .type-practice { background:#FDF6E3; color:#7A5A00; }
+  .type-fes { background:#FBEAF0; color:#72243E; }
+
+  .result-badge { font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:900; letter-spacing:2px; padding:4px 12px; }
+  .result-win  { background:var(--win);  color:var(--white); }
+  .result-draw { background:var(--draw); color:var(--white); }
+  .result-lose { background:var(--lose); color:var(--white); }
+
+  .match-score-row { padding:12px 20px; display:flex; align-items:center; justify-content:space-between; }
+  .team-name { font-size:14px; font-weight:700; color:var(--text); }
+  .team-name.opponent { text-align:right; }
+  .score-center { text-align:center; flex:1; }
+  .score-main { font-family:'Barlow Condensed',sans-serif; font-size:48px; font-weight:900; line-height:1; color:var(--text); display:flex; align-items:center; justify-content:center; gap:10px; }
+  .score-half { font-size:11px; color:var(--gray); margin-top:2px; }
+
+  .match-footer { padding:10px 20px 14px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; border-top:1px solid var(--border); }
+  .tag { font-size:11px; font-weight:700; padding:3px 8px; border-radius:2px; font-family:'Barlow Condensed',sans-serif; letter-spacing:0.5px; }
+  .tag-cat { background:#E8F5EE; color:var(--green-dark); }
+  .tag-venue { background:#F0F0F0; color:#555; }
+  .tag-mvp { background:#FDF6E3; color:#7A5A00; }
+
+  /* LOADING */
+  .loading { text-align:center; padding:60px 20px; }
+  .spinner { width:36px; height:36px; border:3px solid var(--border); border-top-color:var(--green); border-radius:50%; animation:spin 0.8s linear infinite; margin:0 auto 16px; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .loading-text { font-size:14px; color:var(--gray); }
+
+  /* EMPTY */
+  .empty { text-align:center; padding:60px 20px; color:var(--gray); font-size:14px; }
+
+  /* ERROR */
+  .error-box { background:#FFF0F0; border:1px solid #FFCCCC; padding:20px; text-align:center; font-size:13px; color:#A32020; }
+
+  footer { background:var(--green-deep); padding:24px 2rem; text-align:center; color:rgba(255,255,255,0.4); font-size:12px; margin-top:40px; }
+  footer a { color:var(--gold); text-decoration:none; }
+  .nav-logo .logo-img { height: 36px; width: auto; object-fit: contain; flex-shrink: 0; display: block; mix-blend-mode: screen; }
+  @media (max-width: 480px) { .nav-logo .logo-img { height: 28px; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="grande_homepage.html">
+    <img src="emblem.png" class="emblem-img" alt="GRANDE FC エンブレム">
+    <img src="grande.png" class="logo-img" alt="GRANDE FC">
+  </a>
+  <ul class="nav-links">
+    <li><a href="grande_about.html">クラブについて</a></li>
+    <li><a href="grande_players.html">選手・スタッフ</a></li>
+    <li><a href="grande_recruit.html">選手募集</a></li>
+    <li><a href="grande_schedule.html">スケジュール</a></li>
+    <li><a href="grande_results.html" class="active">試合結果</a></li>
+    <li><a href="grande_news.html">ニュース</a></li>
+    <li><a href="grande_contact.html" style="color:var(--gold);">お問い合わせ</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <div class="eyebrow">MATCH RESULTS</div>
+  <h1>試合<em>結果</em></h1>
+  <div class="header-line"></div>
+</div>
+
+<div class="wrap">
+
+  <!-- 集計バー -->
+  <div class="stats-bar" id="statsBar">
+    <div class="stat-box"><div class="stat-num" id="statTotal">—</div><div class="stat-label">TOTAL</div></div>
+    <div class="stat-box"><div class="stat-num win" id="statWin">—</div><div class="stat-label">WIN</div></div>
+    <div class="stat-box"><div class="stat-num draw" id="statDraw">—</div><div class="stat-label">DRAW</div></div>
+    <div class="stat-box"><div class="stat-num lose" id="statLose">—</div><div class="stat-label">LOSE</div></div>
+  </div>
+
+  <!-- フィルター -->
+  <div class="filter-bar" id="filterBar">
+    <button class="filter-btn active" onclick="setFilter('all',this)">すべて</button>
+    <button class="filter-btn" onclick="setFilter('win',this)">勝ち</button>
+    <button class="filter-btn" onclick="setFilter('draw',this)">引き分け</button>
+    <button class="filter-btn" onclick="setFilter('lose',this)">負け</button>
+  </div>
+
+  <!-- 試合一覧 -->
+  <div id="matchList">
+    <div class="loading">
+      <div class="spinner"></div>
+      <div class="loading-text">試合データを読み込んでいます…</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 Yatsugatake Grande Football Club. All Rights Reserved. ／ <a href="grande_contact.html">お問い合わせ</a></p>
+</footer>
+
+<script>
+const BIN_ID  = '6a1d192121f9ee59d2a39471';
+const API_KEY = '$2a$10$fMVrBXjLBMllbrm18CDXy.ELqnMQmZbg65x13ZhaU55B/4Tuq4Ina';
+
+let allMatches = [];
+let currentFilter = 'all';
+
+// 日付フォーマット
+function formatDate(str) {
+  if (!str) return '';
+  const d = new Date(str);
+  if (isNaN(d)) return str;
+  return `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日（${'日月火水木金土'[d.getDay()]}）`;
+}
+
+// 試合形式バッジ
+function typeBadge(type) {
+  const map = { '公式戦':'official', '練習試合':'practice', 'フェス':'fes' };
+  const cls = map[type] || 'practice';
+  return `<span class="match-type-badge type-${cls}">${type||'練習試合'}</span>`;
+}
+
+// 結果バッジ
+function resultBadge(result) {
+  if (result === 'win'  || result === '勝ち') return '<span class="result-badge result-win">勝</span>';
+  if (result === 'draw' || result === '引き分け') return '<span class="result-badge result-draw">分</span>';
+  if (result === 'loss' || result === '負け') return '<span class="result-badge result-lose">負</span>';
+  return '<span class="result-badge result-lose">負</span>';
+}
+
+// スコア色
+function scoreColor(myScore, oppScore) {
+  if (myScore > oppScore) return 'color:var(--win)';
+  if (myScore === oppScore) return 'color:var(--draw)';
+  return 'color:var(--lose)';
+}
+
+// カードHTML生成
+function renderCard(m) {
+  const myGoals  = parseInt(m.myGoals  ?? m.homeScore ?? 0);
+  const oppGoals = parseInt(m.oppGoals ?? m.awayScore ?? 0);
+  const result   = m.result || (myGoals > oppGoals ? '勝ち' : myGoals === oppGoals ? '引き分け' : '負け');
+
+  const halfScore = (m.h1goals !== undefined && m.h1goals !== null)
+    ? `前半 ${m.h1goals??0}-${m.h1conceded??0}　後半 ${m.h2goals??0}-${m.h2conceded??0}`
+    : '';
+
+  const tags = [];
+  if (m.category) tags.push(`<span class="tag tag-cat">${m.category}</span>`);
+  if (m.venue)    tags.push(`<span class="tag tag-venue">📍 ${m.venue}</span>`);
+  if (m.mvp)      tags.push(`<span class="tag tag-mvp">⭐ MVP: ${m.mvp}</span>`);
+
+  return `
+  <div class="match-card" data-result="${result}">
+    <div class="match-top">
+      <div class="match-meta">
+        <span class="match-date">${formatDate(m.date || m.datetime)}</span>
+        <span class="match-tourney">${m.tournament || m.tournamentName || ''}</span>
+        ${typeBadge(m.matchType || m.type)}
+      </div>
+      ${resultBadge(result)}
+    </div>
+    <div class="match-score-row">
+      <div class="team-name">グランデFC</div>
+      <div class="score-center">
+        <div class="score-main">
+          <span style="${scoreColor(myGoals, oppGoals)}">${myGoals}</span>
+          <span style="color:var(--gray); font-size:32px;">−</span>
+          <span>${oppGoals}</span>
+        </div>
+        ${halfScore ? `<div class="score-half">${halfScore}</div>` : ''}
+      </div>
+      <div class="team-name opponent">${m.opponent || m.opponentName || ''}</div>
+    </div>
+    ${tags.length ? `<div class="match-footer">${tags.join('')}</div>` : ''}
+  </div>`;
+}
+
+// 統計更新
+function updateStats(matches) {
+  const total = matches.length;
+  const win   = matches.filter(m => (m.result||'') === 'win'  || (m.result||'') === '勝ち').length;
+  const draw  = matches.filter(m => (m.result||'') === 'draw' || (m.result||'') === '引き分け').length;
+  const lose  = matches.filter(m => (m.result||'') === 'loss' || (m.result||'') === '負け').length;
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statWin').textContent   = win;
+  document.getElementById('statDraw').textContent  = draw;
+  document.getElementById('statLose').textContent  = lose;
+}
+
+// 描画
+function renderMatches(filter) {
+  currentFilter = filter;
+  const filtered = filter === 'all'
+    ? allMatches
+    : allMatches.filter(m => {
+        const r = m.result || '';
+        if (filter === 'win')  return r === 'win'  || r === '勝ち';
+        if (filter === 'draw') return r === 'draw' || r === '引き分け';
+        if (filter === 'lose') return r === 'loss' || r === '負け';
+        return true;
+      });
+
+  updateStats(allMatches);
+
+  const list = document.getElementById('matchList');
+  if (filtered.length === 0) {
+    list.innerHTML = '<div class="empty">該当する試合がありません</div>';
+    return;
+  }
+
+  // 新しい順にソート
+  const sorted = [...filtered].sort((a, b) => {
+    const da = new Date(a.date || a.datetime || 0);
+    const db = new Date(b.date || b.datetime || 0);
+    return db - da;
+  });
+
+  list.innerHTML = `<div class="match-list">${sorted.map(renderCard).join('')}</div>`;
+}
+
+// フィルターボタン
+function setFilter(filter, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMatches(filter);
+}
+
+// JSONBinからデータ取得
+async function loadMatches() {
+  try {
+    const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+      headers: { 'X-Master-Key': API_KEY }
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const json = await res.json();
+    const record = json.record;
+
+    // データ構造を柔軟に対応
+    if (Array.isArray(record)) {
+      allMatches = record;
+    } else if (record.matches && Array.isArray(record.matches)) {
+      allMatches = record.matches;
+    } else if (record.results && Array.isArray(record.results)) {
+      allMatches = record.results;
+    } else {
+      // オブジェクトのvaluesを試す
+      const vals = Object.values(record).find(v => Array.isArray(v));
+      allMatches = vals || [];
+    }
+
+    if (allMatches.length === 0) {
+      document.getElementById('matchList').innerHTML = '<div class="empty">まだ試合データがありません</div>';
+      updateStats([]);
+      return;
+    }
+
+    renderMatches('all');
+
+  } catch (err) {
+    console.error(err);
+    document.getElementById('matchList').innerHTML = `
+      <div class="error-box">
+        データの読み込みに失敗しました。<br>
+        しばらくしてから再度お試しください。
+      </div>`;
+  }
+}
+
+loadMatches();
+</script>
+</body>
+</html>

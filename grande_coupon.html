@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>クーポン│湯RANDE</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,800;0,900;1,900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  :root {
+    --green: #1A6B3C; --green-dark: #0F4526; --green-deep: #071A0F;
+    --gold: #D4A820; --gold-light: #E8C040;
+    --white: #FFFFFF; --gray: #8A9BB0; --text: #0D1B2A;
+  }
+  body {
+    font-family:'Noto Sans JP',sans-serif;
+    background: var(--green-deep);
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 24px;
+    position: relative; overflow: hidden;
+  }
+
+  /* 背景装飾 */
+  .bg-circle {
+    position: absolute; border-radius: 50%;
+    border: 1px solid rgba(212,168,32,0.08);
+    pointer-events: none;
+  }
+
+  /* 湯気 */
+  .steam-line {
+    position: absolute; bottom: 0; width: 2px;
+    background: linear-gradient(to top, transparent, rgba(255,255,255,0.1), transparent);
+    border-radius: 99px;
+    animation: steamRise linear infinite;
+  }
+  @keyframes steamRise {
+    0%   { transform: scaleY(0) translateY(0); opacity:0; }
+    20%  { opacity:1; }
+    100% { transform: scaleY(1) translateY(-100vh); opacity:0; }
+  }
+
+  /* カード */
+  .card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(212,168,32,0.2);
+    width: 100%; max-width: 420px;
+    padding: 40px 36px;
+    position: relative; z-index: 2;
+    animation: cardIn 0.5s ease;
+  }
+  @keyframes cardIn {
+    from { opacity:0; transform: translateY(20px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  .card-icon { font-size: 48px; text-align:center; margin-bottom:16px; }
+
+  .card-eyebrow {
+    font-family:'Barlow Condensed',sans-serif; font-size:11px;
+    font-weight:700; letter-spacing:4px; color:var(--gold);
+    text-align:center; margin-bottom:8px;
+  }
+  .card-title {
+    font-family:'Barlow Condensed',sans-serif;
+    font-size: 40px; font-weight:900; font-style:italic;
+    color:var(--white); text-align:center; line-height:1;
+    margin-bottom:6px;
+  }
+  .card-title span { color:var(--gold); }
+  .card-desc {
+    font-size:13px; color:rgba(255,255,255,0.5);
+    text-align:center; line-height:1.8; margin-bottom:28px;
+  }
+
+  /* INPUT */
+  .input-wrap { position: relative; margin-bottom: 12px; }
+  .pw-input {
+    width: 100%; padding: 14px 48px 14px 16px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--white); font-size: 18px;
+    font-family:'Barlow Condensed',sans-serif; font-weight:700;
+    letter-spacing: 3px; outline: none;
+    transition: border-color 0.2s;
+  }
+  .pw-input:focus { border-color: var(--gold); background: rgba(212,168,32,0.05); }
+  .pw-input::placeholder { color: rgba(255,255,255,0.2); letter-spacing:1px; font-size:14px; font-weight:400; }
+  .pw-input.error { border-color: #E05555; animation: shake 0.4s ease; }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20%,60%  { transform: translateX(-6px); }
+    40%,80%  { transform: translateX(6px); }
+  }
+
+  /* 目アイコン（表示/非表示） */
+  .toggle-pw {
+    position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+    background: none; border: none; cursor: pointer;
+    color: rgba(255,255,255,0.4); font-size: 18px;
+    transition: color 0.2s;
+  }
+  .toggle-pw:hover { color: var(--gold); }
+
+  .error-msg {
+    font-size: 12px; color: #FF8A8A;
+    min-height: 18px; margin-bottom: 16px;
+    display: flex; align-items:center; gap:6px;
+  }
+  .error-msg::before { content:'⚠'; font-size:12px; }
+
+  .btn-enter {
+    width: 100%; padding: 15px;
+    background: var(--gold); color: var(--green-deep);
+    border: none; font-size: 15px; font-weight:900;
+    font-family:'Noto Sans JP',sans-serif; cursor: pointer;
+    transition: all 0.2s;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+  }
+  .btn-enter:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-enter:active { transform: translateY(0); }
+
+  .back-link {
+    display: block; text-align:center; margin-top:20px;
+    font-size:12px; color:rgba(255,255,255,0.35);
+    text-decoration:none; transition:color 0.2s;
+  }
+  .back-link:hover { color: rgba(255,255,255,0.6); }
+
+  /* ===== クーポン表示 ===== */
+  #couponView { display:none; }
+  #couponView.show { display:block; animation: cardIn 0.6s ease; }
+
+  .coupon-box {
+    border: 2px dashed var(--gold);
+    padding: 32px 28px; text-align:center;
+    position: relative; overflow:hidden;
+    margin-bottom: 20px;
+  }
+  .coupon-box::before {
+    content:'';
+    position:absolute; inset:0;
+    background: radial-gradient(ellipse at center, rgba(212,168,32,0.06) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .coupon-label {
+    font-family:'Barlow Condensed',sans-serif; font-size:11px;
+    font-weight:700; letter-spacing:4px; color:var(--gold); margin-bottom:10px;
+  }
+  .coupon-title {
+    font-family:'Barlow Condensed',sans-serif;
+    font-size: 52px; font-weight:900; font-style:italic;
+    color:var(--white); line-height:0.95; margin-bottom:6px;
+  }
+  .coupon-title span { color:var(--gold); }
+  .coupon-price {
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:24px; font-weight:700; color:rgba(255,255,255,0.6);
+    margin-bottom:16px;
+  }
+  .coupon-price strong { font-size:56px; color:var(--gold); }
+
+  .coupon-divider {
+    display:flex; align-items:center; gap:8px; margin:16px 0;
+    color:rgba(255,255,255,0.2); font-size:12px;
+  }
+  .coupon-divider::before, .coupon-divider::after {
+    content:''; flex:1; height:1px; background:rgba(255,255,255,0.15);
+  }
+
+  .coupon-info { font-size:12px; color:rgba(255,255,255,0.5); line-height:1.9; margin-bottom:20px; }
+  .coupon-info strong { color:rgba(255,255,255,0.8); }
+
+  .btn-line {
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    width:100%; padding:16px;
+    background:#06C755; color:var(--white);
+    border:none; font-size:15px; font-weight:900;
+    font-family:'Noto Sans JP',sans-serif; cursor:pointer;
+    text-decoration:none; transition:all 0.2s;
+  }
+  .btn-line:hover { background:#04A847; transform:translateY(-1px); }
+  .btn-line svg { width:22px; height:22px; fill:var(--white); }
+
+  .coupon-note {
+    font-size:11px; color:rgba(255,255,255,0.3);
+    text-align:center; line-height:1.8; margin-top:16px;
+  }
+</style>
+</head>
+<body>
+
+<!-- 背景装飾 -->
+<div class="bg-circle" style="width:500px;height:500px;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+<div class="bg-circle" style="width:300px;height:300px;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+
+<!-- パスワード入力 -->
+<div class="card" id="pwView">
+  <div class="card-icon">♨</div>
+  <div class="card-eyebrow">MEMBERS ONLY</div>
+  <h1 class="card-title">湯<span>RANDE</span></h1>
+  <p class="card-desc">
+    グランデ関係者限定のクーポンページです。<br>
+    合言葉を入力してください。
+  </p>
+
+  <div class="input-wrap">
+    <input
+      class="pw-input" id="pwInput" type="password"
+      placeholder="合言葉を入力"
+      maxlength="32"
+      onkeydown="if(event.key==='Enter')checkPw()"
+    >
+    <button class="toggle-pw" onclick="togglePw()" title="表示/非表示">👁</button>
+  </div>
+  <div class="error-msg" id="errMsg"></div>
+
+  <button class="btn-enter" onclick="checkPw()">クーポンを見る →</button>
+  <a href="grande_yurande.html" class="back-link">← 湯RANDEのページに戻る</a>
+</div>
+
+<!-- クーポン表示 -->
+<div class="card" id="couponView">
+  <div class="coupon-box">
+    <div class="coupon-label">GRANDE MEMBERS COUPON</div>
+    <div class="coupon-title">湯<span>RANDE</span></div>
+    <div class="coupon-price">特別入浴料 <strong>¥200</strong></div>
+
+    <div class="coupon-divider">ご利用方法</div>
+
+    <div class="coupon-info">
+      <strong>① このページ または LINEクーポンを提示</strong><br>
+      ② 受付で「<strong>グランデです！</strong>」と元気に挨拶<br>
+      ③ 特別料金200円でご入浴いただけます<br><br>
+      対象：<strong>グランデ関係者全員</strong>（選手・保護者・OB・スタッフ）<br>
+      施設：北杜市「べるが」内 <strong>尾白の湯</strong><br>
+      期間：2026年4月1日 〜 2027年3月31日
+    </div>
+
+    <div style="background:var(--gold); color:var(--green-deep); padding:18px; text-align:center;">
+      <div style="font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:700; letter-spacing:2px; margin-bottom:6px; opacity:0.7;">HOW TO USE</div>
+      <div style="font-size:16px; font-weight:900;">受付でこのページを提示してください</div>
+    </div>
+  </div>
+
+  <p class="coupon-note">
+    ※ このページはグランデ関係者限定です。第三者への共有はご遠慮ください。<br>
+    ※ 受付でのマナーある行動をお願いします。
+  </p>
+
+  <a href="grande_yurande.html" class="back-link">← 湯RANDEのページに戻る</a>
+</div>
+
+<script>
+// 湯気
+for (let i = 0; i < 12; i++) {
+  const s = document.createElement('div');
+  s.className = 'steam-line';
+  s.style.cssText = `left:${10+Math.random()*80}%; height:${60+Math.random()*120}px; animation-duration:${4+Math.random()*5}s; animation-delay:${Math.random()*8}s;`;
+  document.body.appendChild(s);
+}
+
+function checkPw() {
+  const val = document.getElementById('pwInput').value.trim();
+  const err = document.getElementById('errMsg');
+  const inp = document.getElementById('pwInput');
+
+  if (val === 'g-onsen') {
+    document.getElementById('pwView').style.display = 'none';
+    const cv = document.getElementById('couponView');
+    cv.classList.add('show');
+    // セッション保持
+    sessionStorage.setItem('yurande_auth', '1');
+  } else {
+    err.textContent = '合言葉が違います。もう一度お試しください。';
+    inp.classList.add('error');
+    inp.value = '';
+    setTimeout(() => inp.classList.remove('error'), 500);
+    inp.focus();
+  }
+}
+
+function togglePw() {
+  const inp = document.getElementById('pwInput');
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+}
+
+// 認証済みならすぐ表示
+if (sessionStorage.getItem('yurande_auth') === '1') {
+  document.getElementById('pwView').style.display = 'none';
+  document.getElementById('couponView').classList.add('show');
+}
+</script>
+</body>
+</html>

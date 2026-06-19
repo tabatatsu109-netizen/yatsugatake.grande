@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>湯RANDE│八ヶ岳グランデフットボールクラブ</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,800;0,900;1,900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  :root {
+    --green: #1A6B3C; --green-dark: #0F4526; --green-deep: #071A0F;
+    --gold: #D4A820; --gold-light: #E8C040;
+    --white: #FFFFFF; --off-white: #F4F7FB;
+    --gray: #8A9BB0; --text: #0D1B2A; --border: #DDE4EF;
+    --steam: rgba(255,255,255,0.06);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family:'Noto Sans JP',sans-serif; background:var(--off-white); color:var(--text); overflow-x:hidden; }
+
+  /* NAV */
+  nav { background:var(--green-deep); display:flex; align-items:center; justify-content:space-between; padding:0 2rem; height:64px; border-bottom:2px solid var(--gold); position:sticky; top:0; z-index:100; }
+  .nav-logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+  .nav-logo .emblem-img { width:44px; height:44px; object-fit:contain; flex-shrink:0; }
+  .nav-logo .name { font-family:'Barlow Condensed',sans-serif; font-size:17px; font-weight:800; color:var(--white); letter-spacing:1px; line-height:1.1; }
+  .nav-logo .name span { display:block; font-size:10px; font-weight:400; color:var(--gold); letter-spacing:1.5px; font-family:'Noto Sans JP',sans-serif; white-space:nowrap; }
+  .nav-back { color:rgba(255,255,255,0.6); font-size:13px; text-decoration:none; display:flex; align-items:center; gap:6px; transition:color 0.2s; }
+  .nav-back:hover { color:var(--gold); }
+  @media(max-width:768px){ nav{padding:0 1.25rem;} .nav-logo .name span{display:none;} }
+
+  /* HERO */
+  .hero {
+    background: var(--green-deep);
+    min-height: 70vh;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    text-align: center;
+  }
+
+  /* 湯気アニメーション */
+  .steam-wrap {
+    position: absolute; inset: 0; pointer-events: none;
+  }
+  .steam-line {
+    position: absolute; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to top, transparent, rgba(255,255,255,0.15), transparent);
+    border-radius: 99px;
+    animation: steamRise linear infinite;
+    transform-origin: bottom center;
+  }
+  @keyframes steamRise {
+    0%   { transform: scaleY(0) translateY(0)  scaleX(1);   opacity:0; }
+    20%  { opacity: 1; }
+    60%  { transform: scaleY(1) translateY(-60vh) scaleX(1.5); opacity: 0.4; }
+    100% { transform: scaleY(1) translateY(-100vh) scaleX(2); opacity: 0; }
+  }
+
+  /* 円形の装飾 */
+  .hero-circle {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(212,168,32,0.1);
+  }
+
+  .hero-content { position: relative; z-index: 2; padding: 60px 2rem; }
+  .hero-eyebrow {
+    font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:700;
+    letter-spacing:5px; color:var(--gold); margin-bottom:16px;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content:''; display:inline-block; width:32px; height:1px; background:var(--gold); opacity:0.5;
+  }
+  .hero-title {
+    font-family:'Barlow Condensed',sans-serif;
+    font-size: clamp(72px, 14vw, 140px);
+    font-weight: 900; font-style: italic;
+    color: var(--white); line-height: 0.9;
+    letter-spacing: -2px;
+    margin-bottom: 8px;
+  }
+  .hero-title span { color: var(--gold); }
+  .hero-subtitle {
+    font-size: 15px; color: rgba(255,255,255,0.6);
+    line-height: 2; margin-bottom: 32px; max-width: 480px; margin-left:auto; margin-right:auto;
+  }
+  .hero-price {
+    display: inline-flex; align-items: baseline; gap: 6px;
+    background: var(--gold); color: var(--green-deep);
+    padding: 12px 28px;
+    font-family:'Barlow Condensed',sans-serif;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+  .hero-price .num { font-size: 48px; font-weight: 900; line-height: 1; }
+  .hero-price .yen { font-size: 24px; font-weight: 900; }
+  .hero-price .note { font-size: 13px; font-weight: 700; opacity: 0.7; }
+
+  /* SECTION */
+  .section { padding: 72px 2rem; max-width: 800px; margin: 0 auto; }
+  .s-eyebrow { font-family:'Barlow Condensed',sans-serif; font-size:12px; font-weight:700; letter-spacing:4px; color:var(--green); margin-bottom:6px; }
+  .s-title { font-family:'Barlow Condensed',sans-serif; font-size:36px; font-weight:900; color:var(--text); line-height:1; margin-bottom:12px; }
+  .s-title em { color:var(--green); font-style:normal; }
+  .s-line { width:36px; height:3px; background:var(--gold); margin-bottom:28px; }
+  .s-text { font-size:15px; line-height:2.2; color:#4A5A6A; }
+  .s-text strong { color:var(--text); font-weight:700; }
+
+  /* PRICE HIGHLIGHT */
+  .price-block {
+    background: var(--green-deep);
+    padding: 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; flex-wrap: wrap;
+    margin: 40px 0;
+    position: relative; overflow: hidden;
+  }
+  .price-block::before {
+    content: '♨';
+    position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+    font-size: 80px; opacity: 0.06; pointer-events:none;
+  }
+  .price-item { text-align: center; }
+  .price-label { font-size: 12px; color: rgba(255,255,255,0.5); letter-spacing:1px; margin-bottom:4px; }
+  .price-val { font-family:'Barlow Condensed',sans-serif; font-size: 48px; font-weight:900; line-height:1; }
+  .price-val.normal { color:rgba(255,255,255,0.3); text-decoration: line-through; }
+  .price-val.special { color: var(--gold); }
+  .price-arrow { font-family:'Barlow Condensed',sans-serif; font-size:32px; font-weight:900; color:var(--gold); }
+  .price-note { font-size:11px; color:rgba(255,255,255,0.4); margin-top:4px; }
+
+  /* HOW TO */
+  .steps { list-style:none; margin: 28px 0; }
+  .step { display:flex; gap:16px; padding:16px 0; border-bottom:1px solid var(--border); align-items:flex-start; }
+  .step:last-child { border-bottom:none; }
+  .step-num {
+    background:var(--green); color:var(--white);
+    font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900;
+    width:36px; height:36px; display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .step-body { font-size:14px; line-height:1.8; color:var(--text); padding-top:6px; }
+  .step-body strong { color:var(--green); }
+
+  /* INFO TABLE */
+  .info-table { width:100%; border-collapse:collapse; margin:20px 0; }
+  .info-table tr { border-bottom:1px solid var(--border); }
+  .info-table th { padding:14px 16px; text-align:left; font-size:13px; font-weight:700; color:var(--green); width:130px; background:var(--white); vertical-align:top; }
+  .info-table td { padding:14px 16px; font-size:14px; color:var(--text); background:var(--white); line-height:1.8; }
+  .info-table tr:first-child th, .info-table tr:first-child td { border-top:1px solid var(--border); }
+
+  /* PERIOD BADGE */
+  .period-badge {
+    display:inline-flex; align-items:center; gap:8px;
+    background:linear-gradient(135deg, var(--green-dark), var(--green));
+    color:var(--white); padding:10px 20px;
+    font-size:14px; font-weight:700;
+    margin-bottom: 28px;
+  }
+  .period-badge::before { content:'📅'; font-size:16px; }
+
+  /* CTA */
+  .cta-section {
+    background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 100%);
+    padding: 56px 2rem; text-align:center;
+  }
+  .cta-title { font-family:'Barlow Condensed',sans-serif; font-size:32px; font-weight:900; color:var(--white); margin-bottom:8px; }
+  .cta-sub { font-size:14px; color:rgba(255,255,255,0.7); margin-bottom:28px; line-height:1.8; }
+  .btn-cta {
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--gold); color:var(--green-deep);
+    padding:15px 36px; font-size:15px; font-weight:900;
+    font-family:'Noto Sans JP',sans-serif; text-decoration:none;
+    transition:all 0.2s;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+  }
+  .btn-cta:hover { background:var(--gold-light); transform:translateY(-2px); }
+  .btn-outline-white {
+    display:inline-flex; align-items:center; gap:8px;
+    background:transparent; color:rgba(255,255,255,0.8);
+    border:1px solid rgba(255,255,255,0.4);
+    padding:14px 28px; font-size:14px; font-weight:500;
+    font-family:'Noto Sans JP',sans-serif; text-decoration:none;
+    transition:all 0.2s; margin-left:12px;
+  }
+  .btn-outline-white:hover { border-color:var(--gold); color:var(--gold); }
+
+  /* PARTNER */
+  .partner-section { padding:48px 2rem; max-width:800px; margin:0 auto; text-align:center; }
+  .partner-label { font-size:12px; color:var(--gray); letter-spacing:2px; font-family:'Barlow Condensed',sans-serif; font-weight:700; margin-bottom:20px; }
+  .partner-logos { display:flex; gap:20px; justify-content:center; flex-wrap:wrap; align-items:center; }
+  .partner-logo { background:var(--white); border:1px solid var(--border); padding:12px 24px; font-size:13px; font-weight:700; color:var(--gray); }
+
+  footer { background:var(--green-deep); padding:24px 2rem; text-align:center; color:rgba(255,255,255,0.4); font-size:12px; }
+  footer a { color:var(--gold); text-decoration:none; }
+
+  @media(max-width:600px){
+    .price-block { flex-direction:column; align-items:center; padding:28px 20px; }
+    .section { padding:48px 1.25rem; }
+    .cta-section { padding:40px 1.25rem; }
+    .btn-outline-white { margin-left:0; margin-top:10px; }
+  }
+  .nav-logo .logo-img { height: 36px; width: auto; object-fit: contain; flex-shrink: 0; display: block; mix-blend-mode: screen; }
+  @media (max-width: 480px) { .nav-logo .logo-img { height: 28px; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="grande_homepage.html">
+    <img src="emblem.png" class="emblem-img" alt="GRANDE FC エンブレム">
+    <img src="grande.png" class="logo-img" alt="GRANDE FC">
+  </a>
+  <a class="nav-back" href="grande_homepage.html">← TOPへ戻る</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <!-- 湯気 -->
+  <div class="steam-wrap" id="steamWrap"></div>
+
+  <!-- 装飾サークル -->
+  <div class="hero-circle" style="width:600px;height:600px;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+  <div class="hero-circle" style="width:400px;height:400px;top:50%;left:50%;transform:translate(-50%,-50%);border-color:rgba(212,168,32,0.15);"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">GRANDE × 温泉</div>
+    <h1 class="hero-title">湯<span>RANDE</span></h1>
+    <p class="hero-subtitle">
+      練習や試合のあとに。仕事や応援の帰りに。<br>
+      グランデに関わるすべての方に、<br>
+      ちょっとひと息つける時間を届けたい。
+    </p>
+    <div class="hero-price">
+      <span class="yen">¥</span>
+      <span class="num">200</span>
+      <span class="note">グランデ関係者 特別価格</span>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="section">
+  <div class="s-eyebrow">ABOUT</div>
+  <h2 class="s-title">日々がんばる<em>みんなへ</em></h2>
+  <div class="s-line"></div>
+  <p class="s-text">
+    選手はもちろん、サポートしていただいているご家族、そしてOBのみなさまへ。<br><br>
+    ちょっとひと息つける時間を届けたい。そんな想いから、特別企画「湯RANDE」がスタートします！<br><br>
+    この企画は、グランデのパートナー企業である<strong>株式会社アルプス様のご協力</strong>により実現しました。北杜市「べるが」内にある温泉施設「<strong>尾白の湯</strong>」を、グランデ関係者ならどなたでも特別価格でご利用いただけます。
+  </p>
+
+  <!-- PRICE -->
+  <div class="price-block">
+    <div class="price-item">
+      <div class="price-label">北杜市外の大人（通常）</div>
+      <div class="price-val normal">830<small style="font-size:20px;">円</small></div>
+    </div>
+    <div class="price-arrow">→</div>
+    <div class="price-item">
+      <div class="price-label">北杜市内（通常）</div>
+      <div class="price-val normal">410<small style="font-size:20px;">円</small></div>
+    </div>
+    <div class="price-arrow">→</div>
+    <div class="price-item">
+      <div class="price-label">グランデ関係者 全員</div>
+      <div class="price-val special">200<small style="font-size:24px; color:var(--gold);">円</small></div>
+      <div class="price-note">市内・市外・大人・子供 すべて同額</div>
+    </div>
+  </div>
+</div>
+
+<!-- 利用方法 -->
+<div style="background:var(--white); padding:1px 0;">
+<div class="section">
+  <div class="s-eyebrow">HOW TO USE</div>
+  <h2 class="s-title">ご利用<em>方法</em></h2>
+  <div class="s-line"></div>
+
+  <div class="period-badge">2025年9月1日 〜 2026年3月31日（予定）</div>
+
+  <ul class="steps">
+    <li class="step">
+      <div class="step-num">1</div>
+      <div class="step-body"><strong>公式LINEで専用クーポンを取得</strong><br>グランデ公式LINEにある専用クーポン、または<strong>クーポンページ</strong>をスマホにご用意ください。</div>
+    </li>
+    <li class="step">
+      <div class="step-num">2</div>
+      <div class="step-body"><strong>受付でクーポンを提示</strong><br>「尾白の湯」受付にてクーポンを提示しながら、<strong>「グランデです！」</strong>と元気に挨拶！</div>
+    </li>
+    <li class="step">
+      <div class="step-num">3</div>
+      <div class="step-body"><strong>特別料金200円でご入浴</strong><br>市内・市外・大人・子供すべて200円。ゆっくり温まってください！</div>
+    </li>
+  </ul>
+
+  <table class="info-table">
+    <tr>
+      <th>対象者</th>
+      <td>グランデに関わるすべての方<br>（現役選手・OB・OG・保護者・スタッフ など）<br><small style="color:var(--gray);">※OBの保護者やご家族もOK！</small></td>
+    </tr>
+    <tr>
+      <th>料金</th>
+      <td><strong style="font-size:18px; color:var(--green);">200円</strong>（税込）<br><small style="color:var(--gray);">※通常：北杜市外の大人 830円、市内大人 410円</small></td>
+    </tr>
+    <tr>
+      <th>施設</th>
+      <td>北杜市「べるが」内 温泉施設「尾白の湯」<br><small style="color:var(--gray);">山梨県北杜市白州町白須8405-1</small></td>
+    </tr>
+    <tr>
+      <th>実施期間</th>
+      <td>2025年9月1日 〜 2026年3月31日（予定）<br><small style="color:var(--gray);">※変更になる可能性があります</small></td>
+    </tr>
+  </table>
+</div>
+</div>
+
+<!-- メッセージ -->
+<div class="section">
+  <div class="s-eyebrow">MESSAGE</div>
+  <h2 class="s-title">マナーを<em>大切に</em></h2>
+  <div class="s-line"></div>
+  <p class="s-text">
+    温泉内でも、脱衣所でも、受付でも、<strong>グランデの一員として、マナーと思いやりをもって行動</strong>してもらえると嬉しいです。<br><br>
+    みんなでこの機会を、あたたかく気持ちのいいものにしていきましょう。<br><br>
+    この「湯RANDE」は、私たちを応援してくれる企業・地域の方々がいてくれるからこそ実現しました。感謝の気持ちを忘れずに。
+  </p>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-title">クーポンをゲットして、温泉へ！</div>
+  <p class="cta-sub">公式LINEにアクセスして、専用クーポンをご確認ください。</p>
+  <a href="grande_coupon.html" class="btn-cta">クーポンはこちら →</a>
+  <a href="grande_homepage.html" class="btn-outline-white">TOPへ戻る</a>
+</div>
+
+<!-- PARTNER -->
+<div class="partner-section">
+  <div class="partner-label">SUPPORTED BY</div>
+  <div class="partner-logos">
+    <a href="https://www.alps-hs.co.jp/" target="_blank" class="partner-logo">株式会社アルプス</a>
+    <a href="https://www.verga.info/" target="_blank" class="partner-logo">べるが（尾白の湯）</a>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Yatsugatake Grande Football Club. All Rights Reserved. ／ <a href="grande_contact.html">お問い合わせ</a></p>
+</footer>
+
+<script>
+// 湯気アニメーション生成
+const wrap = document.getElementById('steamWrap');
+for (let i = 0; i < 18; i++) {
+  const s = document.createElement('div');
+  s.className = 'steam-line';
+  const left = 10 + Math.random() * 80;
+  const h = 80 + Math.random() * 160;
+  const dur = 4 + Math.random() * 6;
+  const delay = Math.random() * 8;
+  s.style.cssText = `left:${left}%; height:${h}px; animation-duration:${dur}s; animation-delay:${delay}s;`;
+  wrap.appendChild(s);
+}
+</script>
+</body>
+</html>
